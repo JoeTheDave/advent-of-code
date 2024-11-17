@@ -3,16 +3,13 @@ import { existsSync, writeFileSync } from 'fs'
 import { questions, FileData, writeSolutionPathMemoryFile } from './common'
 
 const generateSolutionFile = (fileData: FileData) => {
+  console.log(fileData)
   if (existsSync(fileData.modulePath)) {
     if (fileData.project === 'aoc') {
-      console.log(
-        `Solution Files for AoC ${fileData.year} - Day ${fileData.day} already exist...`,
-      )
+      console.log(`Solution Files for AoC ${fileData.year} - Day ${fileData.day} already exist...`)
     }
     if (fileData.project === 'euler') {
-      console.log(
-        `Solution Files for Project Euler Problem ${fileData.problem} already exist...`,
-      )
+      console.log(`Solution Files for Project Euler Problem ${fileData.problem} already exist...`)
     }
     return null
   }
@@ -32,16 +29,14 @@ ${
       : ``
   }
 
+${fileData.project === 'aoc' ? `import { testData, puzzleData } from './data'` : ''}
+
 export const displayName = '${_.upperCase(fileData.project)} | ${
-    fileData.project === 'aoc' ? `${fileData.year} | Day ${fileData.day}` : ''
+    fileData.project === 'aoc' ? `${fileData.year} | Day ${fileData.day} | xxx Name xxx` : ''
   }${fileData.project === 'euler' ? `Problem ${fileData.problem} | ` : ''}'
 ${
   fileData.project === 'aoc'
-    ? `export const complete = false
-
-const testData: string[] = []
-
-const puzzleData: string[] = []
+    ? `export const complete = [false, false]
 
 const useTestData = true
 
@@ -78,10 +73,26 @@ export const solution = () => {
   }
 }
 
+const generateDataFile = (fileData: FileData) => {
+  const fileContent = `export const testData = []
+
+export const puzzleData = []
+`
+  try {
+    writeFileSync(fileData.modulePath.replace('/index.ts', '/data.ts'), fileContent)
+    writeSolutionPathMemoryFile(fileData.modulePath)
+  } catch (e) {
+    console.log('Unable to generate data file.')
+  }
+}
+
 const createProjectFiles = async () => {
   const fileData = await questions()
   if (fileData) {
     generateSolutionFile(fileData)
+    if (fileData.project === 'aoc') {
+      generateDataFile(fileData)
+    }
   } else {
     console.log('An unknown error occurred...')
   }

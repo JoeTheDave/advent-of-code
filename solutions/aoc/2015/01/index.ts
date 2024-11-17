@@ -5,7 +5,7 @@
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2015 | Day 1 | Not Quite Lisp'
-export const complete = true
+export const complete = [true, true]
 
 const useTestData = false
 

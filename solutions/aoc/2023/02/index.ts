@@ -5,7 +5,7 @@
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2023 | Day 2 | Cube Conundrum'
-export const complete = true
+export const complete = [true, true]
 
 const useTestData = false
 
