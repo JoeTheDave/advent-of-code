@@ -5,7 +5,7 @@
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2017 | Day 7 | Recursive Circus'
-export const complete = [false, false]
+export const complete = [true, true]
 
 const useTestData = false
 
@@ -50,6 +50,15 @@ export const generateProgramStack = () => {
   return programStack
 }
 
+export const findUniqueChildWeight = (program: Program) => {
+  const childWeights = program.supporting.map(prog => prog.totalWeight) as number[]
+  const uniqueNumbers = Array.from(new Set(childWeights))
+  if (uniqueNumbers.length > 1) {
+    return childWeights.filter(n => n === uniqueNumbers[0]).length === 1 ? uniqueNumbers[0] : uniqueNumbers[1]
+  }
+  return null
+}
+
 export const solutionOne = () => {
   const programStack = generateProgramStack()
   const baseProgram = programStack.find(prog => !prog.supportedBy)
@@ -76,12 +85,19 @@ export const solutionTwo = () => {
     }
   } while (!exitCondition)
 
-  const result = programStack.filter(prog => prog.supporting.length).map(prog => prog.supporting.length)
-  console.log(result)
-
-  // const baseProgram = programStack.find(prog => !prog.supportedBy)
-  // console.log(`${baseProgram?.name} - ${baseProgram?.weight} - ${baseProgram?.totalWeight}`)
-  // baseProgram?.supporting.forEach(prog => {
-  //   console.log(`${prog?.name} - ${prog?.weight} - ${prog?.totalWeight}`)
-  // })
+  let focusProgram = programStack.find(prog => !prog.supportedBy) as Program
+  let answer = 0
+  do {
+    const uniqueWeight = findUniqueChildWeight(focusProgram)
+    if (uniqueWeight) {
+      focusProgram = focusProgram?.supporting.find(prog => prog.totalWeight === uniqueWeight) as Program
+    } else {
+      const uniformWeight = (
+        focusProgram.supportedBy?.supporting.find(prog => prog.totalWeight !== focusProgram.totalWeight) as Program
+      ).totalWeight
+      const change = (uniformWeight as number) - (focusProgram.totalWeight as number)
+      answer = focusProgram.weight + change
+    }
+  } while (answer === 0)
+  return answer
 }
