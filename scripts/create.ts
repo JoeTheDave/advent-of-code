@@ -43,11 +43,11 @@ const useTestData = true
 const data = useTestData ? testData : puzzleData
 
 export const solutionOne = () => {
-  return data
+  return null
 }
 
 export const solutionTwo = () => {
-  return data
+  return null
 }
 
 `
