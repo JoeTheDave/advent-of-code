@@ -1,7 +1,0 @@
-node_modules
-.vscode
-.env
-
-/.cache
-/build
-/public/build

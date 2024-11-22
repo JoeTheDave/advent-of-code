@@ -1,10 +1,4 @@
-export const testData = [
-  'ugknbfddgicrmopn',
-  'aaa',
-  'jchzalrnumimnmhp',
-  'haegwjzuvuyypxyu',
-  'dvszwmarrgswjxmb',
-]
+export const testData = ['ugknbfddgicrmopn', 'aaa', 'jchzalrnumimnmhp', 'haegwjzuvuyypxyu', 'dvszwmarrgswjxmb']
 
 export const puzzleData = [
   'rthkunfaakmwmush',

@@ -1,13 +1,15 @@
+// Advent of Code | 2015 | Day 6 | Probably a Fire Hazard
 // https://adventofcode.com/2015/day/6
 // https://adventofcode.com/2015/day/6/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const probablyAFireHazard = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
-  return [part1(data), part2(data)]
-}
+export const displayName = 'AOC | 2015 | Day 6 | Probably a Fire Hazard'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 const generateLightGrid = () => {
   const grid: number[][] = []
@@ -21,10 +23,7 @@ const generateLightGrid = () => {
 }
 
 const prepareInstruction = (line: string) => {
-  const instruction = line
-    .replace('turn ', 'turn-')
-    .replace(' through ', ' ')
-    .split(' ')
+  const instruction = line.replace('turn ', 'turn-').replace(' through ', ' ').split(' ')
   const [xStart, yStart] = instruction[1].split(',').map(val => parseInt(val))
   const [xEnd, yEnd] = instruction[2].split(',').map(val => parseInt(val))
   return {
@@ -48,7 +47,7 @@ const evaluateGrid = (grid: number[][]) => {
   return count
 }
 
-const part1 = (data: string[]) => {
+export const solutionOne = () => {
   const grid = generateLightGrid()
   data.forEach((dataLine: string) => {
     const instruction = prepareInstruction(dataLine)
@@ -67,7 +66,7 @@ const part1 = (data: string[]) => {
   return evaluateGrid(grid)
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const grid = generateLightGrid()
   data.forEach((dataLine: string) => {
     const instruction = prepareInstruction(dataLine)
@@ -84,11 +83,4 @@ const part2 = (data: string[]) => {
     }
   })
   return evaluateGrid(grid)
-}
-
-export default probablyAFireHazard
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }

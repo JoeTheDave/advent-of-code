@@ -1,15 +1,16 @@
+// Advent of Code | 2015 | Day 7 | xxx Name xxx
 // https://adventofcode.com/2015/day/7
 // https://adventofcode.com/2015/day/7/input
 
 import { padStart } from 'lodash'
+import { testData, puzzleData } from './data'
 
-import { puzzleData, testData } from './data'
+export const displayName = 'AOC | 2015 | Day 7 | xxx Name xxx'
+export const complete = [true, true]
 
-const someAssemblyRequired = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
-  return [part1(data), part2(data)]
-}
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 const parseConfigValue = (value: string) => {
   const num = parseFloat(value)
@@ -60,13 +61,7 @@ class Wire {
 
   print16BitNumber = () => {
     console.log(
-      this.value
-        ? `${padStart(this.value.toString(), 10, ' ')} - ${padStart(
-            this.value.toString(2),
-            16,
-            '0',
-          )}`
-        : null,
+      this.value ? `${padStart(this.value.toString(), 10, ' ')} - ${padStart(this.value.toString(2), 16, '0')}` : null,
     )
   }
 
@@ -75,9 +70,7 @@ class Wire {
       if (typeof i === 'number') {
         return i
       } else {
-        const dependentWire = this.dependentWires.find(
-          w => w.name === i,
-        ) as Wire
+        const dependentWire = this.dependentWires.find(w => w.name === i) as Wire
         return dependentWire.value
       }
     }) as number[]
@@ -88,11 +81,7 @@ class Wire {
   }
 
   print = () => {
-    console.log(
-      `${this.name} | ${this.value} | ${this.operation} | ${this.pending.join(
-        ' ',
-      )}`,
-    )
+    console.log(`${this.name} | ${this.value} | ${this.operation} | ${this.pending.join(' ')}`)
   }
 
   resolveValue = () => {
@@ -109,8 +98,7 @@ class Wire {
       } else if (this.operation?.includes('RSHIFT')) {
         this.value = inputValues[0] >> parseInt(this.operation.split('|')[1])
       } else if (this.operation?.includes('LSHIFT')) {
-        this.value =
-          (inputValues[0] << parseInt(this.operation.split('|')[1])) & 0xffff
+        this.value = (inputValues[0] << parseInt(this.operation.split('|')[1])) & 0xffff
       }
     }
   }
@@ -132,25 +120,15 @@ class WiringConfiguration {
   }
 
   printReadyForResolution = () => {
-    const wires = this.wires.filter(
-      w => w.isReadyForResolution() && w.value === null,
-    )
-    console.log(
-      `===== Ready == ${padStart(
-        wires.length.toString(),
-        3,
-        '0',
-      )} ======================================`,
-    )
+    const wires = this.wires.filter(w => w.isReadyForResolution() && w.value === null)
+    console.log(`===== Ready == ${padStart(wires.length.toString(), 3, '0')} ======================================`)
     wires.forEach(w => w.print())
     console.log('=========================================================')
     console.log('')
   }
 
   resolveReadyWires = () => {
-    this.wires
-      .filter(w => w.isReadyForResolution())
-      .forEach(w => w.resolveValue())
+    this.wires.filter(w => w.isReadyForResolution()).forEach(w => w.resolveValue())
   }
 
   printResolvedWires = () => {
@@ -180,13 +158,13 @@ class WiringConfiguration {
   }
 }
 
-const part1 = (data: string[]) => {
+export const solutionOne = () => {
   const wiringConfig = new WiringConfiguration(data)
   wiringConfig.resolveAllWires()
   return wiringConfig.wires.find(c => c.name === 'a')?.value
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const wiringConfig = new WiringConfiguration(data)
   wiringConfig.resolveAllWires()
   const wireA = wiringConfig.wires.find(c => c.name === 'a') as Wire
@@ -195,11 +173,4 @@ const part2 = (data: string[]) => {
   wiringConfig.clearWireValues()
   wiringConfig.resolveAllWires()
   return wireA.value
-}
-
-export default someAssemblyRequired
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }

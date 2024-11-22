@@ -1,13 +1,15 @@
+// Advent of Code | 2015 | Day 5 | Doesn't He Have Intern-Elves For This?
 // https://adventofcode.com/2015/day/5
 // https://adventofcode.com/2015/day/5/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const doesntHeHaveInternElvesForThis = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
-  return [part1(data), part2(data)]
-}
+export const displayName = "AOC | 2015 | Day 5 | Doesn't He Have Intern-Elves For This?"
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 const hasThreeVowels = (word: string) => {
   return word.split('').filter(l => 'aeiou'.includes(l)).length >= 3
@@ -37,9 +39,7 @@ const hasDuplicatePairs = (word: string) => {
   let hasDuplicatePair = false
   for (let l = 0; l < letters.length - 3; l++) {
     for (let i = l + 2; i < letters.length - 1; i++) {
-      if (
-        letters.slice(l, l + 2).join('') === letters.slice(i, i + 2).join('')
-      ) {
+      if (letters.slice(l, l + 2).join('') === letters.slice(i, i + 2).join('')) {
         hasDuplicatePair = true
         break
       }
@@ -63,31 +63,14 @@ const hasSingleLetterSeparatedDuplicate = (word: string) => {
   return hasDuplicateSpacedLetter
 }
 
-const part1 = (data: string[]) => {
+export const solutionOne = () => {
   return data.reduce((count, word) => {
-    return (
-      count +
-      (hasThreeVowels(word) && hasDoubleLetter(word) && hasNoBadPairs(word)
-        ? 1
-        : 0)
-    )
+    return count + (hasThreeVowels(word) && hasDoubleLetter(word) && hasNoBadPairs(word) ? 1 : 0)
   }, 0)
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   return data.reduce((count, word) => {
-    return (
-      count +
-      (hasDuplicatePairs(word) && hasSingleLetterSeparatedDuplicate(word)
-        ? 1
-        : 0)
-    )
+    return count + (hasDuplicatePairs(word) && hasSingleLetterSeparatedDuplicate(word) ? 1 : 0)
   }, 0)
-}
-
-export default doesntHeHaveInternElvesForThis
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }

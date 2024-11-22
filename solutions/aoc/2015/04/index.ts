@@ -6,7 +6,7 @@ import { createHash } from 'crypto'
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2015 | Day 4 | The Ideal Stocking Stuffer'
-export const complete = [true, false]
+export const complete = [true, true]
 
 const useTestData = false
 
@@ -31,5 +31,13 @@ export const solutionOne = () => {
 }
 
 export const solutionTwo = () => {
-  return null
+  let i = 0
+  let exitCondition = false
+  do {
+    i++
+    if (generateMD5Hash(`${data[0]}${i}`).substring(0, 6) === '000000') {
+      exitCondition = true
+    }
+  } while (!exitCondition)
+  return i
 }
