@@ -1,43 +1,16 @@
+// Advent of Code | 2021 | Day 8 | Seven Segment Search
 // https://adventofcode.com/2021/day/8
 // https://adventofcode.com/2021/day/8/input
 
 import { difference } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const sevenSegmentSearch = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 8 | Seven Segment Search'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  return data.reduce(
-    (sum, d) =>
-      sum +
-      d
-        .split(' | ')[1]
-        .split(' ')
-        .map(s => s.length)
-        .filter(n => [2, 4, 3, 7].includes(n)).length,
-    0,
-  )
-}
-
-const part2 = (data: string[]) => {
-  return data.reduce((sum, d) => {
-    const [hints, ciphers] = d.split(' | ').map(_ => _.split(' '))
-    const mapper = new SegmentMapper(hints)
-    return sum + parseInt(ciphers.map(c => mapper.decipherDigit(c)).join(''))
-  }, 0)
-}
-
-export default sevenSegmentSearch
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
+const data = useTestData ? testData : puzzleData
 
 export type segmentKey = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g'
 
@@ -78,54 +51,38 @@ export class SegmentMapper {
     this.processDigitFourHint()
   }
   processDigitOneHint() {
-    const hintOneSignals = this.hints
-      .find(h => h.length === 2)
-      ?.split('') as string[]
+    const hintOneSignals = this.hints.find(h => h.length === 2)?.split('') as string[]
     this.list.forEach(key => {
       if (this.oneSegments.includes(key)) {
         this[key as segmentKey] = [...hintOneSignals]
       } else {
-        this[key as segmentKey] = this[key as segmentKey].filter(
-          p => !hintOneSignals.includes(p),
-        )
+        this[key as segmentKey] = this[key as segmentKey].filter(p => !hintOneSignals.includes(p))
       }
     })
   }
   processDigitSevenHint() {
-    const hintSevenSignals = this.hints
-      .find(h => h.length === 3)
-      ?.split('') as string[]
-    const hintOneSignals = this.hints
-      .find(h => h.length === 2)
-      ?.split('') as string[]
+    const hintSevenSignals = this.hints.find(h => h.length === 3)?.split('') as string[]
+    const hintOneSignals = this.hints.find(h => h.length === 2)?.split('') as string[]
     const uniqSevenSignal = difference(hintSevenSignals, hintOneSignals)
     const uniqSevenSegment = difference(this.sevenSegments, this.oneSegments)[0]
     this.list.forEach(key => {
       if (key === uniqSevenSegment) {
         this[key as segmentKey] = [...uniqSevenSignal]
       } else {
-        this[key as segmentKey] = this[key as segmentKey].filter(
-          p => p !== uniqSevenSignal[0],
-        )
+        this[key as segmentKey] = this[key as segmentKey].filter(p => p !== uniqSevenSignal[0])
       }
     })
   }
   processDigitFourHint() {
-    const hintFourSignals = this.hints
-      .find(h => h.length === 4)
-      ?.split('') as string[]
-    const hintOneSignals = this.hints
-      .find(h => h.length === 2)
-      ?.split('') as string[]
+    const hintFourSignals = this.hints.find(h => h.length === 4)?.split('') as string[]
+    const hintOneSignals = this.hints.find(h => h.length === 2)?.split('') as string[]
     const uniqFourSignals = difference(hintFourSignals, hintOneSignals)
     const uniqFourSegments = difference(this.fourSegments, this.oneSegments)
     this.list.forEach(key => {
       if (uniqFourSegments.includes(key)) {
         this[key as segmentKey] = [...uniqFourSignals]
       } else {
-        this[key as segmentKey] = this[key as segmentKey].filter(
-          p => !uniqFourSignals.includes(p),
-        )
+        this[key as segmentKey] = this[key as segmentKey].filter(p => !uniqFourSignals.includes(p))
       }
     })
   }
@@ -163,4 +120,23 @@ export class SegmentMapper {
   }
 }
 
-sevenSegmentSearch()
+export const solutionOne = () => {
+  return data.reduce(
+    (sum, d) =>
+      sum +
+      d
+        .split(' | ')[1]
+        .split(' ')
+        .map(s => s.length)
+        .filter(n => [2, 4, 3, 7].includes(n)).length,
+    0,
+  )
+}
+
+export const solutionTwo = () => {
+  return data.reduce((sum, d) => {
+    const [hints, ciphers] = d.split(' | ').map(_ => _.split(' '))
+    const mapper = new SegmentMapper(hints)
+    return sum + parseInt(ciphers.map(c => mapper.decipherDigit(c)).join(''))
+  }, 0)
+}
