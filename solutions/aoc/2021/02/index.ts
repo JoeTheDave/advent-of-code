@@ -1,16 +1,17 @@
+// Advent of Code | 2021 | Day 2 | Dive!
 // https://adventofcode.com/2021/day/2
 // https://adventofcode.com/2021/day/2/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const dive = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 2 | Dive!'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
+const data = useTestData ? testData : puzzleData
+
+export const solutionOne = () => {
   const position = data.reduce(
     (position, move) => {
       const [direction, magnitude] = move.split(' ')
@@ -28,7 +29,7 @@ const part1 = (data: string[]) => {
   return position.distance * position.depth
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const position = data.reduce(
     (position, move) => {
       const [direction, magnitude] = move.split(' ')
@@ -45,11 +46,4 @@ const part2 = (data: string[]) => {
     { distance: 0, depth: 0, aim: 0 },
   )
   return position.distance * position.depth
-}
-
-export default dive
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }
