@@ -1,16 +1,55 @@
+// Advent of Code | 2021 | Day 4 | Giant Squid
 // https://adventofcode.com/2021/day/4
 // https://adventofcode.com/2021/day/4/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const giantSquid = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 4 | Giant Squid'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+export const checkForWinningBoard = (board: { num: number; active: boolean }[][]) => {
+  let isWinner = false
+  if (board.some(row => row.every(c => c.active))) {
+    isWinner = true
+  }
+  for (let i = 0; i < board[0].length; i++) {
+    if (board.every(row => row[i].active)) {
+      isWinner = true
+    }
+  }
+  return isWinner
 }
 
-const part1 = (data: string[]) => {
+export const calculateBoardScore = (board: { num: number; active: boolean }[][], lastCalledNumber: number) => {
+  let sum = 0
+  for (let i = 0; i < board.length; i++) {
+    sum += board[i].filter(row => !row.active).reduce((rowSum, cell) => rowSum + cell.num, 0)
+  }
+  return sum * lastCalledNumber
+}
+
+export const createBoardsData = (data: string[]) => {
+  const boards: { num: number; active: boolean }[][][] = []
+  for (let i = 2; i < data.length; i += 6) {
+    boards.push(
+      data.slice(i, i + 5).map(r =>
+        r
+          .trim()
+          .split('  ')
+          .join(' ')
+          .split(' ')
+          .map(n => ({ num: parseInt(n), active: false })),
+      ),
+    )
+  }
+  return boards
+}
+
+export const solutionOne = () => {
   const numbers = data[0].split(',').map(n => parseInt(n))
   let boards = createBoardsData(data)
   let winningBoard: number | null = null
@@ -40,7 +79,7 @@ const part1 = (data: string[]) => {
   return calculateBoardScore(boards[winningBoard as number], lastCalledNum)
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const numbers = data[0].split(',').map(n => parseInt(n))
   let boards = createBoardsData(data)
   let lastWinningBoard: number | null = null
@@ -70,56 +109,4 @@ const part2 = (data: string[]) => {
     }
   }
   return calculateBoardScore(boards[lastWinningBoard as number], lastCalledNum)
-}
-
-export default giantSquid
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export const checkForWinningBoard = (
-  board: { num: number; active: boolean }[][],
-) => {
-  let isWinner = false
-  if (board.some(row => row.every(c => c.active))) {
-    isWinner = true
-  }
-  for (let i = 0; i < board[0].length; i++) {
-    if (board.every(row => row[i].active)) {
-      isWinner = true
-    }
-  }
-  return isWinner
-}
-
-export const calculateBoardScore = (
-  board: { num: number; active: boolean }[][],
-  lastCalledNumber: number,
-) => {
-  let sum = 0
-  for (let i = 0; i < board.length; i++) {
-    sum += board[i]
-      .filter(row => !row.active)
-      .reduce((rowSum, cell) => rowSum + cell.num, 0)
-  }
-  return sum * lastCalledNumber
-}
-
-export const createBoardsData = (data: string[]) => {
-  const boards: { num: number; active: boolean }[][][] = []
-  for (let i = 2; i < data.length; i += 6) {
-    boards.push(
-      data.slice(i, i + 5).map(r =>
-        r
-          .trim()
-          .split('  ')
-          .join(' ')
-          .split(' ')
-          .map(n => ({ num: parseInt(n), active: false })),
-      ),
-    )
-  }
-  return boards
 }
