@@ -1,38 +1,18 @@
+// Advent of Code | 2021 | Day 12 | Passage Pathing
 // https://adventofcode.com/2021/day/12
 // https://adventofcode.com/2021/day/12/input
 
 import { flatten } from 'lodash'
-import { puzzleData, testData1 as testData } from './data'
+import { testData1 as testData, puzzleData } from './data'
 
-const passagePathing = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 12 | Passage Pathing'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  const network = new Network(data)
-  const path = 'start'
-  const pathOptions = traverseNetwork(path, network)
-  return pathOptions.length
-}
+const data = useTestData ? testData : puzzleData
 
-const part2 = (data: string[]) => {
-  const network = new Network(data)
-  const path = 'start'
-  const pathOptions = traverseNetworkCasual(path, network)
-  return pathOptions.length
-}
-
-export default passagePathing
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export class Node {
+class Node {
   id: string
   connections: Node[]
   primary: boolean
@@ -44,7 +24,7 @@ export class Node {
   }
 }
 
-export class Network {
+class Network {
   nodes: Node[]
 
   constructor(data: string[]) {
@@ -65,29 +45,21 @@ export class Network {
   }
 }
 
-export const traverseNetwork = (path: string, network: Network) => {
-  const currentNode = network.nodes.find(
-    n => n.id === path.split('|').slice(-1)[0],
-  ) as Node
+const traverseNetwork = (path: string, network: Network) => {
+  const currentNode = network.nodes.find(n => n.id === path.split('|').slice(-1)[0]) as Node
 
   const pathOptions = currentNode.connections
     .filter(n => n.primary || !path.includes(n.id))
     .map(n => [...path.split('|'), n.id])
 
   const paths = flatten(
-    pathOptions.map(p =>
-      p.slice(-1)[0] === 'end'
-        ? p.join('|')
-        : traverseNetwork(p.join('|'), network),
-    ),
+    pathOptions.map(p => (p.slice(-1)[0] === 'end' ? p.join('|') : traverseNetwork(p.join('|'), network))),
   ) as string[]
   return paths
 }
 
-export const traverseNetworkCasual = (path: string, network: Network) => {
-  const currentNode = network.nodes.find(
-    n => n.id === path.split('|').slice(-1)[0],
-  ) as Node
+const traverseNetworkCasual = (path: string, network: Network) => {
+  const currentNode = network.nodes.find(n => n.id === path.split('|').slice(-1)[0]) as Node
 
   let allowDuplicateSeconary = true
   const usedSecondaries: string[] = []
@@ -103,19 +75,25 @@ export const traverseNetworkCasual = (path: string, network: Network) => {
     })
 
   const pathOptions = currentNode.connections
-    .filter(
-      n =>
-        (n.primary || !path.includes(n.id) || allowDuplicateSeconary) &&
-        n.id !== 'start',
-    )
+    .filter(n => (n.primary || !path.includes(n.id) || allowDuplicateSeconary) && n.id !== 'start')
     .map(n => [...path.split('|'), n.id])
 
   const paths = flatten(
-    pathOptions.map(p =>
-      p.slice(-1)[0] === 'end'
-        ? p.join('|')
-        : traverseNetworkCasual(p.join('|'), network),
-    ),
+    pathOptions.map(p => (p.slice(-1)[0] === 'end' ? p.join('|') : traverseNetworkCasual(p.join('|'), network))),
   ) as string[]
   return paths
+}
+
+export const solutionOne = () => {
+  const network = new Network(data)
+  const path = 'start'
+  const pathOptions = traverseNetwork(path, network)
+  return pathOptions.length
+}
+
+export const solutionTwo = () => {
+  const network = new Network(data)
+  const path = 'start'
+  const pathOptions = traverseNetworkCasual(path, network)
+  return pathOptions.length
 }

@@ -1,16 +1,27 @@
+// Advent of Code | 2021 | Day 10 | Syntax Scoring
 // https://adventofcode.com/2021/day/10
 // https://adventofcode.com/2021/day/10/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const syntaxScoring = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 10 | Syntax Scoring'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+const openingChars = '([{<'
+const closingChars = ')]}>'
+
+const errorPoints = {
+  ')': 3,
+  ']': 57,
+  '}': 1197,
+  '>': 25137,
 }
 
-const part1 = (data: string[]) => {
+export const solutionOne = () => {
   const illegalChars = []
   for (let l = 0; l < data.length; l++) {
     const line = data[l]
@@ -34,12 +45,10 @@ const part1 = (data: string[]) => {
     }
   }
 
-  return illegalChars
-    .map(c => errorPoints[c as keyof typeof errorPoints])
-    .reduce((sum, num) => sum + num)
+  return illegalChars.map(c => errorPoints[c as keyof typeof errorPoints]).reduce((sum, num) => sum + num)
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const incompleteList = []
   for (let l = 0; l < data.length; l++) {
     let isError = false
@@ -63,35 +72,11 @@ const part2 = (data: string[]) => {
       }
     }
     if (!isError) {
-      incompleteList.push(
-        unClosedTags.reverse().map(c => closingChars[openingChars.indexOf(c)]),
-      )
+      incompleteList.push(unClosedTags.reverse().map(c => closingChars[openingChars.indexOf(c)]))
     }
   }
   const sortedScores = incompleteList
-    .map(list =>
-      list.reduce(
-        (score, char) => score * 5 + closingChars.indexOf(char) + 1,
-        0,
-      ),
-    )
+    .map(list => list.reduce((score, char) => score * 5 + closingChars.indexOf(char) + 1, 0))
     .sort((a: number, b: number) => a - b)
   return sortedScores[Math.floor(sortedScores.length / 2)]
-}
-
-export default syntaxScoring
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export const openingChars = '([{<'
-export const closingChars = ')]}>'
-
-export const errorPoints = {
-  ')': 3,
-  ']': 57,
-  '}': 1197,
-  '>': 25137,
 }

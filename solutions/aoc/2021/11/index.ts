@@ -1,45 +1,18 @@
+// Advent of Code | 2021 | Day 11 | Dumbo Octopus
 // https://adventofcode.com/2021/day/11
 // https://adventofcode.com/2021/day/11/input
 
 import { flatten } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const dumboOctopus = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 11 | Dumbo Octopus'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  const grid = new Grid(data)
-  for (let x = 0; x < 100; x++) {
-    grid.executeStep()
-  }
+const data = useTestData ? testData : puzzleData
 
-  return grid.flashCount
-}
-
-const part2 = (data: string[]) => {
-  const grid = new Grid(data)
-  let step = 0
-  for (step = 1; true; step++) {
-    grid.executeStep()
-    if (grid.isSimultaneousFlash()) {
-      break
-    }
-  }
-  return step
-}
-
-export default dumboOctopus
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export class Cell {
+class Cell {
   energy: number
   neighbors: Cell[]
   flashed: boolean
@@ -58,7 +31,7 @@ export class Cell {
   }
 }
 
-export class Grid {
+class Grid {
   cells: Cell[][]
   flatCells: Cell[]
   flashCount: number
@@ -112,9 +85,7 @@ export class Grid {
     })
     let pendingFlashCells = []
     do {
-      pendingFlashCells = this.flatCells.filter(
-        cell => cell.energy > 9 && !cell.flashed,
-      )
+      pendingFlashCells = this.flatCells.filter(cell => cell.energy > 9 && !cell.flashed)
       if (pendingFlashCells.length) {
         pendingFlashCells[0].flash()
         this.flashCount++
@@ -135,4 +106,24 @@ export class Grid {
   isSimultaneousFlash() {
     return this.flatCells.every(cell => cell.energy === 0)
   }
+}
+
+export const solutionOne = () => {
+  const grid = new Grid(data)
+  for (let x = 0; x < 100; x++) {
+    grid.executeStep()
+  }
+  return grid.flashCount
+}
+
+export const solutionTwo = () => {
+  const grid = new Grid(data)
+  let step = 0
+  for (step = 1; true; step++) {
+    grid.executeStep()
+    if (grid.isSimultaneousFlash()) {
+      break
+    }
+  }
+  return step
 }

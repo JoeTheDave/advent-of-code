@@ -1,12 +1,4 @@
-export const testData1 = [
-  'start-A',
-  'start-b',
-  'A-c',
-  'A-b',
-  'b-d',
-  'A-end',
-  'b-end',
-]
+export const testData1 = ['start-A', 'start-b', 'A-c', 'A-b', 'b-d', 'A-end', 'b-end']
 
 export const testData2 = [
   'dc-end',
