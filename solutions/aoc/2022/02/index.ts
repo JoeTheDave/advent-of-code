@@ -1,38 +1,27 @@
+// Advent of Code | 2022 | Day 2 | Rock Paper Scissors
 // https://adventofcode.com/2022/day/2
 // https://adventofcode.com/2022/day/2/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const rockPaperScissors = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 2 | Rock Paper Scissors'
+export const complete = [false, false]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
+const data = useTestData ? testData : puzzleData
+
+export const solutionOne = () => {
   return data.reduce((points, game) => {
     const [opponent, you] = game.split(' ')
     let score = 0
-    if (
-      (opponent === 'A' && you === 'Y') ||
-      (opponent === 'B' && you === 'Z') ||
-      (opponent === 'C' && you === 'X')
-    ) {
+    if ((opponent === 'A' && you === 'Y') || (opponent === 'B' && you === 'Z') || (opponent === 'C' && you === 'X')) {
       score += 6
     }
-    if (
-      (opponent === 'A' && you === 'Z') ||
-      (opponent === 'B' && you === 'X') ||
-      (opponent === 'C' && you === 'Y')
-    ) {
+    if ((opponent === 'A' && you === 'Z') || (opponent === 'B' && you === 'X') || (opponent === 'C' && you === 'Y')) {
       score += 0
     }
-    if (
-      (opponent === 'A' && you === 'X') ||
-      (opponent === 'B' && you === 'Y') ||
-      (opponent === 'C' && you === 'Z')
-    ) {
+    if ((opponent === 'A' && you === 'X') || (opponent === 'B' && you === 'Y') || (opponent === 'C' && you === 'Z')) {
       score += 3
     }
     if (you === 'X') {
@@ -48,7 +37,7 @@ const part1 = (data: string[]) => {
   }, 0)
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   return data.reduce((points, game) => {
     const [opponent, you] = game.split(' ')
     let score = 0
@@ -96,11 +85,4 @@ const part2 = (data: string[]) => {
     }
     return points + score
   }, 0)
-}
-
-export default rockPaperScissors
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }
