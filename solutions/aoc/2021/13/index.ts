@@ -1,42 +1,16 @@
+// Advent of Code | 2021 | Day 13 | Transparent Origami
 // https://adventofcode.com/2021/day/13
 // https://adventofcode.com/2021/day/13/input
 
 import { uniq } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const transparentOrigami = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2021 | Day 13 | Transparent Origami'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  const spacer = data.indexOf('')
-  const dots = data.slice(0, spacer)
-  const fold = data.slice(spacer + 1).map(f => f.replace('fold along ', ''))[0]
-  const result = performFold(dots, fold)
-
-  return result.length
-}
-
-const part2 = (data: string[]) => {
-  const spacer = data.indexOf('')
-  let dots = data.slice(0, spacer)
-  const folds = data.slice(spacer + 1).map(f => f.replace('fold along ', ''))
-  folds.forEach(fold => {
-    dots = performFold(dots, fold)
-  })
-
-  return displayResults(dots).join('')
-}
-
-export default transparentOrigami
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
+const data = useTestData ? testData : puzzleData
 
 const performFold = (dots: string[], fold: string) => {
   const [dir, val] = fold.split('=')
@@ -85,4 +59,25 @@ const displayResults = (dots: string[]) => {
     displayGrid.push(displayLine)
   }
   return displayGrid
+}
+
+export const solutionOne = () => {
+  const spacer = data.indexOf('')
+  const dots = data.slice(0, spacer)
+  const fold = data.slice(spacer + 1).map(f => f.replace('fold along ', ''))[0]
+  const result = performFold(dots, fold)
+  return result.length
+}
+
+export const solutionTwo = () => {
+  const spacer = data.indexOf('')
+  let dots = data.slice(0, spacer)
+  const folds = data.slice(spacer + 1).map(f => f.replace('fold along ', ''))
+  folds.forEach(fold => {
+    dots = performFold(dots, fold)
+  })
+  const chunkSize = 39
+  return displayResults(dots)
+    .join('')
+    .match(new RegExp(`.{1,${chunkSize}}`, 'g'))
 }
