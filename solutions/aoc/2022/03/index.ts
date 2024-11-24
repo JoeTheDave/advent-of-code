@@ -1,16 +1,19 @@
+// Advent of Code | 2022 | Day 3 | Rucksack Reorganization
 // https://adventofcode.com/2022/day/3
 // https://adventofcode.com/2022/day/3/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const rucksackReorganization = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 3 | Rucksack Reorganization'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
+const data = useTestData ? testData : puzzleData
+
+export const alpha = 'abcdefghijklmnopqrstuvwxyz'
+
+export const solutionOne = () => {
   let score = 0
 
   data.forEach(rucksack => {
@@ -34,7 +37,7 @@ const part1 = (data: string[]) => {
   return score
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   let score = 0
   for (let i = 0; i < 100; i++) {
     const sacks = data.slice(i * 3, i * 3 + 3)
@@ -55,12 +58,3 @@ const part2 = (data: string[]) => {
   }
   return score
 }
-
-export default rucksackReorganization
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export const alpha = 'abcdefghijklmnopqrstuvwxyz'

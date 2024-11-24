@@ -1,17 +1,18 @@
+// Advent of Code | 2022 | Day 6 | Tuning Trouble
 // https://adventofcode.com/2022/day/6
 // https://adventofcode.com/2022/day/6/input
 
 import { uniq } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const tuningTrouble = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 6 | Tuning Trouble'
+export const complete = [true, true]
 
-  return [part1(data[0]), part2(data[0])]
-}
+const useTestData = false
 
-const part1 = (data: string) => {
+const data = (useTestData ? testData : puzzleData)[0]
+
+export const solutionOne = () => {
   let result = 0
   for (let i = 4; i <= data.length; i++) {
     if (uniq(data.slice(i - 4, i)).length === 4) {
@@ -22,7 +23,7 @@ const part1 = (data: string) => {
   return result
 }
 
-const part2 = (data: string) => {
+export const solutionTwo = () => {
   let result = 0
   for (let i = 14; i <= data.length; i++) {
     if (uniq(data.slice(i - 14, i)).length === 14) {
@@ -31,11 +32,4 @@ const part2 = (data: string) => {
     }
   }
   return result
-}
-
-export default tuningTrouble
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }

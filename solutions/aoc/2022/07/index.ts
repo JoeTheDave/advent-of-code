@@ -1,50 +1,28 @@
+// Advent of Code | 2022 | Day 7 | No Space Left On Device
 // https://adventofcode.com/2022/day/7
 // https://adventofcode.com/2022/day/7/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const noSpaceLeftOnDevice = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 7 | No Space Left On Device'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  const { flatDirs } = generateFileSystem(data)
-  return flatDirs
-    .map(d => getDirSize(d))
-    .filter(s => s <= 100000)
-    .reduce((sum, num) => sum + num)
-}
+const data = useTestData ? testData : puzzleData
 
-const part2 = (data: string[]) => {
-  const { flatDirs, fileSystem } = generateFileSystem(data)
-  const deleteAtLeast = 30000000 - (70000000 - getDirSize(fileSystem))
-  return Math.min(
-    ...flatDirs.map(d => getDirSize(d)).filter(s => s >= deleteAtLeast),
-  )
-}
-
-export default noSpaceLeftOnDevice
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export interface File {
+interface File {
   name: string
   type: 'file'
   size: number
 }
-export interface Dir {
+interface Dir {
   name: string
   type: 'dir'
   contents: (File | Dir)[]
 }
 
-export const createDir = (name: string) => {
+const createDir = (name: string) => {
   return {
     name,
     type: 'dir',
@@ -52,7 +30,7 @@ export const createDir = (name: string) => {
   } as Dir
 }
 
-export const createFile = (name: string, size: number) => {
+const createFile = (name: string, size: number) => {
   return {
     name,
     type: 'file',
@@ -60,7 +38,7 @@ export const createFile = (name: string, size: number) => {
   } as File
 }
 
-export const getDirSize = (dir: Dir) => {
+const getDirSize = (dir: Dir) => {
   return dir.contents.reduce((size, i): number => {
     if (i.type === 'file') {
       return size + i.size
@@ -70,7 +48,7 @@ export const getDirSize = (dir: Dir) => {
   }, 0)
 }
 
-export const generateFileSystem = (data: string[]) => {
+const generateFileSystem = (data: string[]) => {
   const fileSystem = createDir('/')
   let workingDir: Dir[] = []
   let flatDirs: Dir[] = []
@@ -84,9 +62,7 @@ export const generateFileSystem = (data: string[]) => {
         } else if (param === '..') {
           workingDir = workingDir.slice(0, -1)
         } else {
-          const newDir = workingDir
-            .slice(-1)[0]
-            .contents.find(d => d.type === 'dir' && d.name === param) as Dir
+          const newDir = workingDir.slice(-1)[0].contents.find(d => d.type === 'dir' && d.name === param) as Dir
           workingDir.push(newDir)
         }
       }
@@ -103,9 +79,7 @@ export const generateFileSystem = (data: string[]) => {
               workingDir.slice(-1)[0].contents.push(dir)
             } else {
               const [size, name] = output
-              workingDir
-                .slice(-1)[0]
-                .contents.push(createFile(name, parseInt(size)))
+              workingDir.slice(-1)[0].contents.push(createFile(name, parseInt(size)))
             }
           }
         }
@@ -113,4 +87,18 @@ export const generateFileSystem = (data: string[]) => {
     }
   }
   return { flatDirs, fileSystem }
+}
+
+export const solutionOne = () => {
+  const { flatDirs } = generateFileSystem(data)
+  return flatDirs
+    .map(d => getDirSize(d))
+    .filter(s => s <= 100000)
+    .reduce((sum, num) => sum + num)
+}
+
+export const solutionTwo = () => {
+  const { flatDirs, fileSystem } = generateFileSystem(data)
+  const deleteAtLeast = 30000000 - (70000000 - getDirSize(fileSystem))
+  return Math.min(...flatDirs.map(d => getDirSize(d)).filter(s => s >= deleteAtLeast))
 }

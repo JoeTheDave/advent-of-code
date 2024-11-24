@@ -1,17 +1,22 @@
+// Advent of Code | 2022 | Day 4 | Camp Cleanup
 // https://adventofcode.com/2022/day/4
 // https://adventofcode.com/2022/day/4/input
 
 import { range, intersection } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const campCleanup = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 4 | Camp Cleanup'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+const prepareData = (data: string[]) => {
+  return data.map(pair => pair.split(',').map(assignment => assignment.split('-').map(section => parseInt(section))))
 }
 
-const part1 = (data: string[]) => {
+export const solutionOne = () => {
   let target = 0
   const pairs = prepareData(data)
   pairs.forEach(pair => {
@@ -27,7 +32,7 @@ const part1 = (data: string[]) => {
   return target
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const pairs = prepareData(data)
   let target = 0
   pairs.forEach(pair => {
@@ -39,21 +44,4 @@ const part2 = (data: string[]) => {
     }
   })
   return target
-}
-
-export default campCleanup
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export const prepareData = (data: string[]) => {
-  return data.map(pair =>
-    pair
-      .split(',')
-      .map(assignment =>
-        assignment.split('-').map(section => parseInt(section)),
-      ),
-  )
 }
