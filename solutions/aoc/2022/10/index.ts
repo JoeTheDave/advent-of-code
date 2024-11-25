@@ -1,16 +1,17 @@
+// Advent of Code | 2022 | Day 10 | Cathode-Ray Tube
 // https://adventofcode.com/2022/day/10
 // https://adventofcode.com/2022/day/10/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const cathodeRayTube = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 10 | Cathode-Ray Tube'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
+const data = useTestData ? testData : puzzleData
+
+export const solutionOne = () => {
   let xReg = 1
   const cycleValues = []
   let signalStrenthSum = 0
@@ -29,7 +30,7 @@ const part1 = (data: string[]) => {
   return signalStrenthSum
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   let cursorPosition = 1
   const cycleValues = []
   const output = []
@@ -54,11 +55,4 @@ const part2 = (data: string[]) => {
     screen.push(output.slice(i * 40, i * 40 + 40).join(''))
   }
   return screen
-}
-
-export default cathodeRayTube
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }

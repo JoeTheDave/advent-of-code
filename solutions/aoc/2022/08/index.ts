@@ -1,16 +1,20 @@
+// Advent of Code | 2022 | Day 8 | Treetop Tree House
 // https://adventofcode.com/2022/day/8
 // https://adventofcode.com/2022/day/8/input
 
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const treetopTreeHouse = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 8 | Treetop Tree House'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
+const data = useTestData ? testData : puzzleData
+
+const constructTreeData = (data: string[]) =>
+  data.map(row => row.split('').map(tree => ({ height: parseInt(tree), visible: false })))
+
+export const solutionOne = () => {
   const trees = constructTreeData(data)
 
   for (let r = 0; r < trees.length; r++) {
@@ -47,14 +51,10 @@ const part1 = (data: string[]) => {
     }
   }
 
-  return trees.reduce(
-    (sum, row) =>
-      sum + row.reduce((sum, tree) => sum + (tree.visible ? 1 : 0), 0),
-    0,
-  )
+  return trees.reduce((sum, row) => sum + row.reduce((sum, tree) => sum + (tree.visible ? 1 : 0), 0), 0)
 }
 
-const part2 = (data: string[]) => {
+export const solutionTwo = () => {
   const trees = constructTreeData(data)
 
   let highestScenicScore = -1
@@ -112,23 +112,8 @@ const part2 = (data: string[]) => {
         }
       }
 
-      highestScenicScore = Math.max(
-        highestScenicScore,
-        top * right * bottom * left,
-      )
+      highestScenicScore = Math.max(highestScenicScore, top * right * bottom * left)
     }
   }
   return highestScenicScore
 }
-
-export default treetopTreeHouse
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export const constructTreeData = (data: string[]) =>
-  data.map(row =>
-    row.split('').map(tree => ({ height: parseInt(tree), visible: false })),
-  )

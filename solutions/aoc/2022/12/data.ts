@@ -1,10 +1,4 @@
-export const testData = [
-  'Sabqponm',
-  'abcryxxl',
-  'accszExk',
-  'acctuvwj',
-  'abdefghi',
-]
+export const testData = ['Sabqponm', 'abcryxxl', 'accszExk', 'acctuvwj', 'abdefghi']
 
 export const puzzleData = [
   'abaccccccccccccccaaaccccaaaaaaaaaaaaaccccccaacccccccccccccccccccccccccccccaaaaaa',

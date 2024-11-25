@@ -1,52 +1,18 @@
+// Advent of Code | 2022 | Day 12 | Hill Climbing Algorithm
 // https://adventofcode.com/2022/day/12
 // https://adventofcode.com/2022/day/12/input
 
 import { compact } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const hillClimbingAlgorithm = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 12 | Hill Climbing Algorithm'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  const grid = new Grid(data)
-  const goalSpace = grid.cells.find(c => c.isGoal) as GridCell
-  while (goalSpace.step === null) {
-    grid.advanceTowardsSummit()
-  }
-  return goalSpace.step
-}
+const data = useTestData ? testData : puzzleData
 
-const part2 = (data: string[]) => {
-  const grid = new Grid(data)
-  grid.clearGridSteps()
-  const goalSpace = grid.cells.find(c => c.isGoal) as GridCell
-  goalSpace.step = 0
-  let shortestPath = 0
-  for (let i = 0; true; i++) {
-    grid.descendFromSummit()
-    const lowestPointCells = grid.cells.filter(
-      c => c.elevation === 0 && c.step !== null,
-    )
-    if (lowestPointCells.length > 0) {
-      shortestPath = lowestPointCells[0].step as number
-      break
-    }
-  }
-  return shortestPath
-}
-
-export default hillClimbingAlgorithm
-
-export const solutionData = {
-  puzzleData,
-  testData,
-}
-
-export class GridCell {
+class GridCell {
   id: number
   x: number
   y: number
@@ -61,17 +27,7 @@ export class GridCell {
   region: string | null
   step: number | null
 
-  constructor({
-    id,
-    x,
-    y,
-    alpha,
-  }: {
-    id: number
-    x: number
-    y: number
-    alpha: string
-  }) {
+  constructor({ id, x, y, alpha }: { id: number; x: number; y: number; alpha: string }) {
     this.id = id
     this.x = x
     this.y = y
@@ -103,7 +59,7 @@ export class GridCell {
   }
 }
 
-export class Grid {
+class Grid {
   xDimension: number
   yDimension: number
   cells: GridCell[]
@@ -129,18 +85,10 @@ export class Grid {
 
     // Establish Neighbor Relationships
     this.cells.forEach(gridCell => {
-      gridCell.nN =
-        this.cells.find(gc => gc.y === gridCell.y - 1 && gc.x === gridCell.x) ||
-        null
-      gridCell.eN =
-        this.cells.find(gc => gc.x === gridCell.x + 1 && gc.y === gridCell.y) ||
-        null
-      gridCell.sN =
-        this.cells.find(gc => gc.y === gridCell.y + 1 && gc.x === gridCell.x) ||
-        null
-      gridCell.wN =
-        this.cells.find(gc => gc.x === gridCell.x - 1 && gc.y === gridCell.y) ||
-        null
+      gridCell.nN = this.cells.find(gc => gc.y === gridCell.y - 1 && gc.x === gridCell.x) || null
+      gridCell.eN = this.cells.find(gc => gc.x === gridCell.x + 1 && gc.y === gridCell.y) || null
+      gridCell.sN = this.cells.find(gc => gc.y === gridCell.y + 1 && gc.x === gridCell.x) || null
+      gridCell.wN = this.cells.find(gc => gc.x === gridCell.x - 1 && gc.y === gridCell.y) || null
     })
 
     // Assign Regions
@@ -190,4 +138,30 @@ export class Grid {
       c.step = null
     })
   }
+}
+
+export const solutionOne = () => {
+  const grid = new Grid(data)
+  const goalSpace = grid.cells.find(c => c.isGoal) as GridCell
+  while (goalSpace.step === null) {
+    grid.advanceTowardsSummit()
+  }
+  return goalSpace.step
+}
+
+export const solutionTwo = () => {
+  const grid = new Grid(data)
+  grid.clearGridSteps()
+  const goalSpace = grid.cells.find(c => c.isGoal) as GridCell
+  goalSpace.step = 0
+  let shortestPath = 0
+  for (let i = 0; true; i++) {
+    grid.descendFromSummit()
+    const lowestPointCells = grid.cells.filter(c => c.elevation === 0 && c.step !== null)
+    if (lowestPointCells.length > 0) {
+      shortestPath = lowestPointCells[0].step as number
+      break
+    }
+  }
+  return shortestPath
 }
