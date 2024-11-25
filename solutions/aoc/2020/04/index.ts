@@ -2,12 +2,12 @@
 // https://adventofcode.com/2020/day/4
 // https://adventofcode.com/2020/day/4/input
 
-import { testData, puzzleData } from './data'
+import { testData2 as testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2020 | Day 4 | Passport Processing'
-export const complete = [false, false]
+export const complete = [true, true]
 
-const useTestData = true
+const useTestData = false
 
 const data = useTestData ? testData : puzzleData
 
@@ -42,8 +42,9 @@ const isStrictlyValidPassport = (doc: Document) => {
   const hasValidExpirationYear = /^(202[0-9]|2030)$/.test(doc['eyr'] || '')
   const hasValidHeight = /^((1[5-8][0-9]|19[0-3])cm|(59|6[0-9]|7[0-6])in)$/.test(doc['hgt'] || '')
   const hasValidHairColor = /^#[0-9a-f]{6}$/.test(doc['hcl'] || '')
-  const hasValidEyeColor = (doc['ecl'] || '') in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
+  const hasValidEyeColor = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(doc['ecl'] || '')
   const hasValidPassportId = /^\d{9}$/.test(doc['pid'] || '')
+
   return (
     isLooslyValid &&
     hasValidBirthYear &&
