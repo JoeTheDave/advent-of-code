@@ -1,23 +1,20 @@
+// Advent of Code | 2022 | Day 14 | Regolith Reservoir
 // https://adventofcode.com/2022/day/14
 // https://adventofcode.com/2022/day/14/input
 
 import { flatten } from 'lodash'
-import { puzzleData, testData } from './data'
+import { testData, puzzleData } from './data'
 
-const regolithReservoir = () => {
-  const useTestData = false
-  const data = useTestData ? testData : puzzleData
+export const displayName = 'AOC | 2022 | Day 14 | Regolith Reservoir'
+export const complete = [true, true]
 
-  return [part1(data), part2(data)]
-}
+const useTestData = false
 
-const part1 = (data: string[]) => {
-  const xVals = flatten(data.map(l => l.split(' -> '))).map(i =>
-    parseInt(i.split(',')[0]),
-  )
-  const yVals = flatten(data.map(l => l.split(' -> '))).map(i =>
-    parseInt(i.split(',')[1]),
-  )
+const data = useTestData ? testData : puzzleData
+
+export const solutionOne = () => {
+  const xVals = flatten(data.map(l => l.split(' -> '))).map(i => parseInt(i.split(',')[0]))
+  const yVals = flatten(data.map(l => l.split(' -> '))).map(i => parseInt(i.split(',')[1]))
   const minX = Math.min(...xVals) - 1
   const maxX = Math.max(...xVals) + 1
   const maxY = Math.max(...yVals) + 1
@@ -37,20 +34,12 @@ const part1 = (data: string[]) => {
       const [p1x, p1y] = points[i].split(',').map(c => parseInt(c))
       const [p2x, p2y] = points[i + 1].split(',').map(c => parseInt(c))
       if (p1x === p2x) {
-        for (
-          let y = p1y;
-          p1y < p2y ? y <= p2y : y >= p2y;
-          p1y < p2y ? y++ : y--
-        ) {
+        for (let y = p1y; p1y < p2y ? y <= p2y : y >= p2y; p1y < p2y ? y++ : y--) {
           map[y][p1x - minX] = -1
         }
       }
       if (p1y === p2y) {
-        for (
-          let x = p1x;
-          p1x < p2x ? x <= p2x : x >= p2x;
-          p1x < p2x ? x++ : x--
-        ) {
+        for (let x = p1x; p1x < p2x ? x <= p2x : x >= p2x; p1x < p2x ? x++ : x--) {
           map[p1y][x - minX] = -1
         }
       }
@@ -88,13 +77,9 @@ const part1 = (data: string[]) => {
   return s - 1
 }
 
-const part2 = (data: string[]) => {
-  const xVals = flatten(data.map(l => l.split(' -> '))).map(i =>
-    parseInt(i.split(',')[0]),
-  )
-  const yVals = flatten(data.map(l => l.split(' -> '))).map(i =>
-    parseInt(i.split(',')[1]),
-  )
+export const solutionTwo = () => {
+  const xVals = flatten(data.map(l => l.split(' -> '))).map(i => parseInt(i.split(',')[0]))
+  const yVals = flatten(data.map(l => l.split(' -> '))).map(i => parseInt(i.split(',')[1]))
   const maxY = Math.max(...yVals) + 2
   const minX = Math.min(...xVals) - maxY
   const maxX = Math.max(...xVals) + maxY
@@ -115,20 +100,12 @@ const part2 = (data: string[]) => {
       const [p1x, p1y] = points[i].split(',').map(c => parseInt(c))
       const [p2x, p2y] = points[i + 1].split(',').map(c => parseInt(c))
       if (p1x === p2x) {
-        for (
-          let y = p1y;
-          p1y < p2y ? y <= p2y : y >= p2y;
-          p1y < p2y ? y++ : y--
-        ) {
+        for (let y = p1y; p1y < p2y ? y <= p2y : y >= p2y; p1y < p2y ? y++ : y--) {
           map[y][p1x - minX] = -1
         }
       }
       if (p1y === p2y) {
-        for (
-          let x = p1x;
-          p1x < p2x ? x <= p2x : x >= p2x;
-          p1x < p2x ? x++ : x--
-        ) {
+        for (let x = p1x; p1x < p2x ? x <= p2x : x >= p2x; p1x < p2x ? x++ : x--) {
           map[p1y][x - minX] = -1
         }
       }
@@ -163,11 +140,4 @@ const part2 = (data: string[]) => {
   }
 
   return s
-}
-
-export default regolithReservoir
-
-export const solutionData = {
-  puzzleData,
-  testData,
 }
