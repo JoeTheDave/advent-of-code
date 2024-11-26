@@ -1,10 +1,16 @@
-import { cloneDeep } from 'lodash'
-import data, { testData } from './data'
-
-// Mirage Maintenance
-
+// Advent of Code | 2023 | Day 9 | Mirage Maintenance
 // https://adventofcode.com/2023/day/9
 // https://adventofcode.com/2023/day/9/input
+
+import { cloneDeep } from 'lodash'
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 9 | Mirage Maintenance'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 export const constructSequenceList = (baseSequence: number[]) => {
   const sequenceList = [baseSequence]
@@ -19,7 +25,7 @@ export const constructSequenceList = (baseSequence: number[]) => {
   return sequenceList
 }
 
-export const iterateSequenceList = (sequenceList: number[][], backwards: boolean = true) => {
+export const iterateSequenceList = (sequenceList: number[][], backwards: boolean) => {
   const list = cloneDeep(sequenceList)
   list.slice(-1)[0].push(0)
   for (let i = list.length - 2; i >= 0; i--) {
@@ -37,7 +43,7 @@ export const mapDataSequence = (line: string) => line.split(' ').map(i => parseI
 export const solutionOne = () => {
   return data
     .map(dataLine => mapDataSequence(dataLine))
-    .map(baseSequence => iterateSequenceList(constructSequenceList(baseSequence))[0].slice(-1)[0])
+    .map(baseSequence => iterateSequenceList(constructSequenceList(baseSequence), false)[0].slice(-1)[0])
     .reduce((sum, num) => sum + num, 0)
 }
 

@@ -1,9 +1,15 @@
-import data from './data'
-
-// Haunted Wasteland
-
+// Advent of Code | 2023 | Day 8 | Haunted Wasteland
 // https://adventofcode.com/2023/day/8
 // https://adventofcode.com/2023/day/8/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 8 | Haunted Wasteland'
+export const complete = [true, false]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 interface NetworkNode {
   id: string
@@ -44,18 +50,19 @@ export const solutionOne = () => {
 }
 
 export const solutionTwo = () => {
-  const { instructionLoop, network } = prepareDataStructures()
-  let nodes = network.filter(n => n.id[2] === 'A')
-  let steps = 0
-  do {
-    // console.log(nodes)
-    nodes = nodes.map(node => (instructionLoop[steps % instructionLoop.length] === 'L' ? node.left : node.right))
-    // console.log(nodes)
-    steps++
-    const zCount = nodes.filter(n => n.id[2] === 'Z').length
-    if (zCount > 3) {
-      console.log(zCount, steps)
-    }
-  } while (nodes.filter(n => n.id[2] === 'Z').length !== nodes.length)
-  return steps
+  // Note: This solution runs for an unknown amount of time to an unknoown answer
+  // const { instructionLoop, network } = prepareDataStructures()
+  // let nodes = network.filter(n => n.id[2] === 'A')
+  // let steps = 0
+  // do {
+  //   // console.log(nodes)
+  //   nodes = nodes.map(node => (instructionLoop[steps % instructionLoop.length] === 'L' ? node.left : node.right))
+  //   // console.log(nodes)
+  //   steps++
+  //   const zCount = nodes.filter(n => n.id[2] === 'Z').length
+  //   if (zCount > 3) {
+  //     console.log(zCount, steps)
+  //   }
+  // } while (nodes.filter(n => n.id[2] === 'Z').length !== nodes.length)
+  // return steps
 }
