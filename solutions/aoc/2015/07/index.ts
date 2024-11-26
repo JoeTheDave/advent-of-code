@@ -1,11 +1,11 @@
-// Advent of Code | 2015 | Day 7 | xxx Name xxx
+// Advent of Code | 2015 | Day 7 | Some Assembly Required
 // https://adventofcode.com/2015/day/7
 // https://adventofcode.com/2015/day/7/input
 
 import { padStart } from 'lodash'
 import { testData, puzzleData } from './data'
 
-export const displayName = 'AOC | 2015 | Day 7 | xxx Name xxx'
+export const displayName = 'AOC | 2015 | Day 7 | Some Assembly Required'
 export const complete = [true, true]
 
 const useTestData = false

@@ -1,10 +1,10 @@
-// Advent of Code | 2015 | Day 8 | xxx Name xxx
+// Advent of Code | 2015 | Day 8 | Matchsticks
 // https://adventofcode.com/2015/day/8
 // https://adventofcode.com/2015/day/8/input
 
 import { testData, puzzleData } from './data'
 
-export const displayName = 'AOC | 2015 | Day 8 | xxx Name xxx'
+export const displayName = 'AOC | 2015 | Day 8 | Matchsticks '
 export const complete = [false, false]
 
 const useTestData = true
@@ -18,6 +18,3 @@ export const solutionOne = () => {
 export const solutionTwo = () => {
   return null
 }
-
-
-
