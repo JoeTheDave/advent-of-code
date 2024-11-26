@@ -1,10 +1,16 @@
-import { countBy } from 'lodash'
-import data, { testData } from './data'
-
-// Camel Cards
-
+// Advent of Code | 2023 | Day 7 | Camel Cards
 // https://adventofcode.com/2023/day/7
 // https://adventofcode.com/2023/day/7/input
+
+import { countBy } from 'lodash'
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 7 | Camel Cards'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 export const processData = () => {
   return data.map(line => {
@@ -111,7 +117,6 @@ export const solutionOne = () => {
 }
 
 export const solutionTwo = () => {
-  console.log(251655567)
   return processData()
     .map(item => ({ ...item, handType: determineJokerHandType(item.hand) }))
     .sort((a, b) => {

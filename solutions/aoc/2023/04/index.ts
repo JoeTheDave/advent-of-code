@@ -1,10 +1,16 @@
-import { intersection } from 'lodash'
-import data from './data'
-
-// Scratchcards
-
+// Advent of Code | 2023 | Day 4 | Scratchcards
 // https://adventofcode.com/2023/day/4
 // https://adventofcode.com/2023/day/4/input
+
+import { intersection } from 'lodash'
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 4 | Scratchcards'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 interface CardDetail {
   id: number
@@ -45,5 +51,5 @@ export const solutionTwo = () => {
       cardCounts[i] += cardCounts[card.id]
     }
   })
-  return Object.keys(cardCounts).reduce((sum, key) => sum + cardCounts[key], 0)
+  return Object.keys(cardCounts).reduce((sum, key) => sum + cardCounts[parseInt(key)], 0)
 }

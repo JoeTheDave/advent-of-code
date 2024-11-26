@@ -1,11 +1,17 @@
-import data from './data'
-
-// If You Give A Seed A Fertilizer
-
+// Advent of Code | 2023 | Day 5 | If You Give A Seed A Fertilizer
 // https://adventofcode.com/2023/day/5
 // https://adventofcode.com/2023/day/5/input
 
-export const generateTransitionMapper = (label: string) => {
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 5 | If You Give A Seed A Fertilizer'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+const generateTransitionMapper = (label: string) => {
   const labelIndex = data.indexOf(label) + 1
   const breakIndex = data.indexOf('', labelIndex)
   return data
@@ -13,7 +19,7 @@ export const generateTransitionMapper = (label: string) => {
     .map(i => i.match(/\d+/g)!.map(num => parseInt(num)))
 }
 
-export const generateDataStructure = () => {
+const generateDataStructure = () => {
   const seeds = data[0]
     .split(': ')[1]
     .match(/\d+/g)!
@@ -31,7 +37,7 @@ export const generateDataStructure = () => {
   return { seeds, transitionMappers }
 }
 
-export const crossRangeAnalysis = (target: number[], test: number[]) => {
+const crossRangeAnalysis = (target: number[], test: number[]) => {
   const [targetStart, targetRange] = target
   const [testStart, testRange] = test
   const targetEnd = targetStart + targetRange - 1

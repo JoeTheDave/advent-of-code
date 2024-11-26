@@ -1,9 +1,15 @@
-import data from './data'
-
-// Wait For It
-
+// Advent of Code | 2023 | Day 6 | Wait For It
 // https://adventofcode.com/2023/day/6
 // https://adventofcode.com/2023/day/6/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 6 | Wait For It'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 const getRaceData = () => {
   const times = (data[0].match(/\d+/g) as string[]).map(s => parseInt(s))

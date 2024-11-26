@@ -1,8 +1,6 @@
-export const adventTitle = 'Camel Cards'
-
 export const testData = ['32T3K 765', 'T55J5 684', 'KK677 28', 'KTJJT 220', 'QQQJA 483']
 
-const data = [
+export const puzzleData = [
   '398KA 456',
   '2J299 282',
   '8939K 547',
@@ -1004,5 +1002,3 @@ const data = [
   '33363 311',
   '56655 348',
 ]
-
-export default data

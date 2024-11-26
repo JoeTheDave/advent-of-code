@@ -1,5 +1,3 @@
-export const adventTitle = 'If You Give A Seed A Fertilizer'
-
 export const testData = [
   'seeds: 79 14 55 13',
   '',
@@ -36,7 +34,7 @@ export const testData = [
   '56 93 4',
 ]
 
-const data = [
+export const puzzleData = [
   'seeds: 3139431799 50198205 3647185634 110151761 2478641666 139825503 498892555 8913570 961540761 489996751 568452082 100080382 907727477 42158689 1617552130 312026427 342640189 97088268 2049289560 336766062',
   '',
   'seed-to-soil map:',
@@ -251,5 +249,3 @@ const data = [
   '3965094386 3724873103 140154003',
   '1680022968 2312273452 277871332',
 ]
-
-export default data
