@@ -1,10 +1,16 @@
-import { uniq, compact } from 'lodash'
-import data from './data'
-
-// Gear Ratios
-
+// Advent of Code | 2023 | Day 3 | Gear Ratios
 // https://adventofcode.com/2023/day/3
 // https://adventofcode.com/2023/day/3/input
+
+import { uniq, compact } from 'lodash'
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 3 | Gear Ratios'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 const getLineNumbers = (line: string, regEx: RegExp) => {
   const numbers: string[] = line.match(regEx) as string[]
@@ -85,7 +91,7 @@ export const solutionTwo = () => {
         }
         const numbers = uniq(compact(adjacentNumbers))
         if (numbers.length === 2) {
-          sum += numbers[0] * numbers[1]
+          sum += parseInt(numbers[0]) * parseInt(numbers[1])
         }
       }
     }
