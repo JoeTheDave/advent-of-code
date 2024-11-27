@@ -1,9 +1,15 @@
-import data, { testData } from './data'
-
-// Lens Library
-
+// Advent of Code | 2023 | Day 15 | Lens Library
 // https://adventofcode.com/2023/day/15
 // https://adventofcode.com/2023/day/15/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 15 | Lens Library'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 export interface Lense {
   label: string
@@ -32,9 +38,7 @@ export const calculateLenseStrength = (boxes: Lense[][]) => {
   return boxes
     .map((box, boxId) => {
       return box
-        .map(
-          (lense, lenseId) => (boxId + 1) * (lenseId + 1) * lense.focalLength,
-        )
+        .map((lense, lenseId) => (boxId + 1) * (lenseId + 1) * lense.focalLength)
         .reduce((sum, num) => sum + num, 0)
     })
     .reduce((sum, num) => sum + num, 0)
@@ -42,9 +46,7 @@ export const calculateLenseStrength = (boxes: Lense[][]) => {
 
 export const solutionOne = () => {
   const sequenceSteps = data[0].split(',')
-  return sequenceSteps
-    .map(sequenceStep => hashWord(sequenceStep))
-    .reduce((sum, num) => sum + num, 0)
+  return sequenceSteps.map(sequenceStep => hashWord(sequenceStep)).reduce((sum, num) => sum + num, 0)
 }
 
 export const solutionTwo = () => {

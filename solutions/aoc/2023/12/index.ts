@@ -1,9 +1,15 @@
-import data, { testData } from './data'
-
-// Hot Springs
-
+// Advent of Code | 2023 | Day 12 | Hot Springs
 // https://adventofcode.com/2023/day/12
 // https://adventofcode.com/2023/day/12/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 12 | Hot Springs'
+export const complete = [true, false]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 export const getUnknownIndexList = (input: string) => {
   const list = []
@@ -35,11 +41,11 @@ export const bruteForceSolutionification = (dataLines: string[]) => {
         }
         completion = (n / possibilities) * 100
         if (completion > nextReport) {
-          console.log(completion)
+          // console.log(completion)
           nextReport += 5
         }
       }
-      console.log(validConfigurations, dataLine)
+      // console.log(validConfigurations, dataLine)
       return validConfigurations
     })
     .reduce((sum, num) => sum + num, 0)
@@ -51,12 +57,11 @@ export const unfoldData = (dataLine: string) => {
 }
 
 export const solutionOne = () => {
-  return null
-  // return bruteForceSolutionification(testData)
+  return bruteForceSolutionification(data)
 }
 
 export const solutionTwo = () => {
-  const unfolded = testData.map(d => unfoldData(d))
-  console.log(unfolded)
-  return null
+  // const unfolded = testData.map(d => unfoldData(d))
+  // console.log(unfolded)
+  // return null
 }

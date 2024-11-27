@@ -1,5 +1,3 @@
-export const adventTitle = 'Parabolic Reflector Dish'
-
 export const testData = [
   'O....#....',
   'O.OO#....#',
@@ -13,7 +11,7 @@ export const testData = [
   '#OO..#....',
 ]
 
-const data = [
+export const puzzleData = [
   '...#.#.O....#.#.OO.OOO.O..O.......O#OO#.#..#....O...#.....O.O#..O..OO..O.#...#O..#...O...##O...OO...',
   '#O....O#..O.#.#..O#...#O.O....#O.#.#O#........O...O..#.OOO#O#.......OO##O.#.OO.O.#...##.##....O#..O#',
   '.O.......O.O.O.O..O.O.....#....O#..#.#O.#OO...#O.O#.O#..#O...#...O.O.......#.O....O.#..#.O##O#..O...',
@@ -115,5 +113,3 @@ const data = [
   '#O...#....#...##O.#......O#...#O..........##O..#.O.#O#..#...OO.O....O..##..#...#...#..O..O....O..O#.',
   '...OO....O#..O..#....O.#.#.....OO.#..#O..OO.#.#.#.#......O...O..#.#..##.....#...O.##.....O#.#..O#O..',
 ]
-
-export default data

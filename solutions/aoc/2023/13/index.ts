@@ -1,9 +1,15 @@
-import data, { testData } from './data'
-
-// Point of Incidence
-
+// Advent of Code | 2023 | Day 13 | Point of Incidence
 // https://adventofcode.com/2023/day/13
 // https://adventofcode.com/2023/day/13/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 13 | Point of Incidence'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 export const compileImageList = (imageData: string[]) => {
   const images: string[][] = [[]]

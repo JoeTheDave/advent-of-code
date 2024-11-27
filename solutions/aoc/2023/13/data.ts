@@ -1,5 +1,3 @@
-export const adventTitle = 'Point of Incidence'
-
 export const testData = [
   '#.##..##.',
   '..#.##.#.',
@@ -18,7 +16,7 @@ export const testData = [
   '#....#..#',
 ]
 
-const data = [
+export const puzzleData = [
   '#....#.',
   '#....##',
   '.####..',
@@ -1321,5 +1319,3 @@ const data = [
   '#..##.##..#',
   '#.....#....',
 ]
-
-export default data

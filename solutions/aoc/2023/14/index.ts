@@ -1,11 +1,17 @@
-import data, { testData } from './data'
-
-// Parabolic Reflector Dish
-
+// Advent of Code | 2023 | Day 14 | Parabolic Reflector Dish
 // https://adventofcode.com/2023/day/14
 // https://adventofcode.com/2023/day/14/input
 
-export const slideStones = (platform: string[]) => {
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 14 | Parabolic Reflector Dish'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+const slideStones = (platform: string[]) => {
   for (let y = 0; y < platform.length; y++) {
     for (let x = 0; x < platform[y].length; x++) {
       if (platform[y][x] === 'O') {
@@ -28,7 +34,7 @@ export const slideStones = (platform: string[]) => {
   return platform
 }
 
-export const rotatePlatform = (platform: string[]) => {
+const rotatePlatform = (platform: string[]) => {
   const newPlatform: string[] = []
   for (let c = 0; c < platform.length; c++) {
     newPlatform.push(
@@ -41,7 +47,7 @@ export const rotatePlatform = (platform: string[]) => {
   return newPlatform
 }
 
-export const cylcePlatform = (platform: string[]) => {
+const cylcePlatform = (platform: string[]) => {
   for (let c = 1; c <= 4; c++) {
     platform = slideStones(platform)
     platform = rotatePlatform(platform)
@@ -49,7 +55,7 @@ export const cylcePlatform = (platform: string[]) => {
   return platform
 }
 
-export const unfoldPlatformKey = (platformKey: string) => {
+const unfoldPlatformKey = (platformKey: string) => {
   const platformDiameter = Math.sqrt(platformKey.length)
   const platform = []
   for (let i = 0; i < platformKey.length; i += platformDiameter) {
@@ -58,7 +64,7 @@ export const unfoldPlatformKey = (platformKey: string) => {
   return platform
 }
 
-export const scorePlatform = (platform: string[]) => {
+const scorePlatform = (platform: string[]) => {
   const platformDiameter = platform.length
   let score = 0
   for (let y = 0; y < platform.length; y++) {

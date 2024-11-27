@@ -1,12 +1,17 @@
-import { cloneDeep } from 'lodash'
-import data, { testData } from './data'
-
-// Cosmic Expansion
-
+// Advent of Code | 2023 | Day 11 | Cosmic Expansion
 // https://adventofcode.com/2023/day/11
 // https://adventofcode.com/2023/day/11/input
 
-export const getGalaxyCoordinatesList = (spaceData: string[]) => {
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 11 | Cosmic Expansion'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+const getGalaxyCoordinatesList = (spaceData: string[]) => {
   const galaxyCoords: number[][] = []
   spaceData.forEach((dataRow, y) => {
     dataRow.split('').forEach((pixel, x) => {
@@ -18,7 +23,7 @@ export const getGalaxyCoordinatesList = (spaceData: string[]) => {
   return galaxyCoords
 }
 
-export const getEmptySpaceInfo = (spaceData: string[]) => {
+const getEmptySpaceInfo = (spaceData: string[]) => {
   const emptyRows = []
   const emptyCols = []
   for (let i = 0; i < spaceData.length; i++) {

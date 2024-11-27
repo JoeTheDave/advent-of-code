@@ -233,7 +233,7 @@ export class Network {
 }
 
 export const solutionOne = () => {
-  const pipeNetwork = new Network(testData)
+  const pipeNetwork = new Network(data)
   return pipeNetwork.mapPath()
 }
 
