@@ -1,5 +1,3 @@
-export const adventTitle = 'Lavaduct Lagoon'
-
 export const testData = [
   'R 6 (#70c710)',
   'D 5 (#0dc571)',
@@ -17,7 +15,7 @@ export const testData = [
   'U 2 (#7a21e3)',
 ]
 
-const data = [
+export const puzzleData = [
   'R 4 (#2efce0)',
   'U 3 (#338e13)',
   'R 8 (#045dc2)',
@@ -685,5 +683,3 @@ const data = [
   'L 4 (#52c162)',
   'U 7 (#535d43)',
 ]
-
-export default data

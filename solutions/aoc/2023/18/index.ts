@@ -1,19 +1,23 @@
-import data, { testData } from './data'
-
-// Lavaduct Lagoon
-
+// Advent of Code | 2023 | Day 18 | Lavaduct Lagoon
 // https://adventofcode.com/2023/day/18
 // https://adventofcode.com/2023/day/18/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 18 | Lavaduct Lagoon'
+export const complete = [true, false]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 const addColumnRight = (grid: string[][]) => grid.map(line => line.push('.'))
 
 const addColumnLeft = (grid: string[][]) => grid.map(line => line.unshift('.'))
 
-const addRowTop = (grid: string[][]) =>
-  grid.unshift(new Array(grid[0].length).fill('.'))
+const addRowTop = (grid: string[][]) => grid.unshift(new Array(grid[0].length).fill('.'))
 
-const addRowBottom = (grid: string[][]) =>
-  grid.push(new Array(grid[0].length).fill('.'))
+const addRowBottom = (grid: string[][]) => grid.push(new Array(grid[0].length).fill('.'))
 
 export const solutionOne = () => {
   const instructions = data.map(line => line.split(' '))
@@ -64,7 +68,6 @@ export const solutionOne = () => {
   const eliminationQueue: string[] = ['0|0']
   do {
     const next = eliminationQueue.shift() as string
-    console.log('next')
     const [xPos, yPos] = next.split('|').map(coord => parseInt(coord))
     grid[yPos][xPos] = '-'
 

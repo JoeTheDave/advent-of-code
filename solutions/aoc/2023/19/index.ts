@@ -1,18 +1,24 @@
-import data, { testData } from './data'
-
-// Aplenty
-
+// Advent of Code | 2023 | Day 19 | Aplenty
 // https://adventofcode.com/2023/day/19
 // https://adventofcode.com/2023/day/19/input
 
-export interface Gizmo {
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 19 | Aplenty'
+export const complete = [true, false]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+interface Gizmo {
   x: number
   m: number
   a: number
   s: number
 }
 
-export class GizmoEvaluationProcessor {
+class GizmoEvaluationProcessor {
   gizmos: Gizmo[]
   workflows: { [key: string]: string[] }
   accepted: Gizmo[]
@@ -31,11 +37,7 @@ export class GizmoEvaluationProcessor {
         if (dataDividor) {
           this.gizmos.push(
             JSON.parse(
-              dataLine
-                .replace('x=', '"x":')
-                .replace('m=', '"m":')
-                .replace('a=', '"a":')
-                .replace('s=', '"s":'),
+              dataLine.replace('x=', '"x":').replace('m=', '"m":').replace('a=', '"a":').replace('s=', '"s":'),
             ),
           )
         } else {
@@ -85,11 +87,7 @@ export class GizmoEvaluationProcessor {
 
   calculateAcceptanceScore = () => {
     return this.accepted.reduce(
-      (sum, gizmo) =>
-        Object.keys(gizmo).reduce(
-          (sum, key) => gizmo[key as keyof typeof gizmo] + sum,
-          0,
-        ) + sum,
+      (sum, gizmo) => Object.keys(gizmo).reduce((sum, key) => gizmo[key as keyof typeof gizmo] + sum, 0) + sum,
       0,
     )
   }

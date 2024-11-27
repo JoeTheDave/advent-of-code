@@ -1,33 +1,39 @@
-import data, { testData } from './data'
-
-// The Floor Will Be Lava
-
+// Advent of Code | 2023 | Day 16 | The Floor Will Be Lava
 // https://adventofcode.com/2023/day/16
 // https://adventofcode.com/2023/day/16/input
 
-export type Trajectory = 'up' | 'right' | 'down' | 'left'
+import { testData, puzzleData } from './data'
 
-export const slashMirrorLookup: { [key: string]: Trajectory } = {
+export const displayName = 'AOC | 2023 | Day 16 | The Floor Will Be Lava'
+export const complete = [true, true]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
+
+type Trajectory = 'up' | 'right' | 'down' | 'left'
+
+const slashMirrorLookup: { [key: string]: Trajectory } = {
   right: 'up',
   up: 'right',
   down: 'left',
   left: 'down',
 }
 
-export const backslashMirrorLookup: { [key: string]: Trajectory } = {
+const backslashMirrorLookup: { [key: string]: Trajectory } = {
   right: 'down',
   up: 'left',
   down: 'right',
   left: 'up',
 }
 
-export interface Mover {
+interface Mover {
   x: number
   y: number
   traj: Trajectory
 }
 
-export class GridSquare {
+class GridSquare {
   squareType: string
   x: number
   y: number
@@ -43,7 +49,7 @@ export class GridSquare {
   }
 }
 
-export class Grid {
+class Grid {
   squares: GridSquare[]
   movers: Mover[]
   gridWidth: number
@@ -82,10 +88,7 @@ export class Grid {
           mover.x--
           break
       }
-      this.movers = this.movers.filter(
-        m =>
-          m.x >= 0 && m.x < this.gridWidth && m.y >= 0 && m.y < this.gridHeight,
-      )
+      this.movers = this.movers.filter(m => m.x >= 0 && m.x < this.gridWidth && m.y >= 0 && m.y < this.gridHeight)
     })
   }
 
@@ -93,9 +96,7 @@ export class Grid {
     const destroyMovers: Mover[] = []
     const newMovers: Mover[] = []
     this.movers.forEach(m => {
-      const square = this.squares.find(
-        square => square.x === m.x && square.y === m.y,
-      ) as GridSquare
+      const square = this.squares.find(square => square.x === m.x && square.y === m.y) as GridSquare
       square.energized = true
       if (square.visitors.includes(m.traj)) {
         destroyMovers.push(m)

@@ -1,5 +1,3 @@
-export const adventTitle = 'Aplenty'
-
 export const testData = [
   'px{a<2006:qkq,m>2090:A,rfg}',
   'pv{a>1716:R,A}',
@@ -20,7 +18,7 @@ export const testData = [
   '{x=2127,m=1623,a=2188,s=1013}',
 ]
 
-const data = [
+export const puzzleData = [
   'mxf{m<2310:phv,zs}',
   'zjr{s>1167:zqt,skq}',
   'hm{x>2975:rkl,x>2818:vhs,a>1062:bkc,kjg}',
@@ -791,5 +789,3 @@ const data = [
   '{x=71,m=146,a=46,s=1359}',
   '{x=1140,m=650,a=75,s=1458}',
 ]
-
-export default data

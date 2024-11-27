@@ -1,10 +1,16 @@
-import { range, flatten } from 'lodash'
-import data, { testData } from './data'
-
-// Step Counter
-
+// Advent of Code | 2023 | Day 21 | Step Counter
 // https://adventofcode.com/2023/day/21
 // https://adventofcode.com/2023/day/21/input
+
+import { range, flatten } from 'lodash'
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2023 | Day 21 | Step Counter'
+export const complete = [true, false]
+
+const useTestData = false
+
+const data = useTestData ? testData : puzzleData
 
 export const getBigData = () => {
   const size = 7
@@ -60,12 +66,9 @@ export class GridMapper {
     }
     this.grid.forEach(gridSquare => {
       gridSquare.up = this.lookup[`${gridSquare.x}|${gridSquare.y - 1}`] || null
-      gridSquare.down =
-        this.lookup[`${gridSquare.x}|${gridSquare.y + 1}`] || null
-      gridSquare.left =
-        this.lookup[`${gridSquare.x - 1}|${gridSquare.y}`] || null
-      gridSquare.right =
-        this.lookup[`${gridSquare.x + 1}|${gridSquare.y}`] || null
+      gridSquare.down = this.lookup[`${gridSquare.x}|${gridSquare.y + 1}`] || null
+      gridSquare.left = this.lookup[`${gridSquare.x - 1}|${gridSquare.y}`] || null
+      gridSquare.right = this.lookup[`${gridSquare.x + 1}|${gridSquare.y}`] || null
     })
   }
 
@@ -134,43 +137,34 @@ export const solutionOne = () => {
 }
 
 export const solutionTwo = () => {
-  const topLeft = getGridCountProfile(0, 0)
-  const topCenter = getGridCountProfile(65, 0)
-  const topRight = getGridCountProfile(130, 0)
-  const middleLeft = getGridCountProfile(0, 65)
-  const middleCenter = getGridCountProfile(65, 65)
-  const middleRight = getGridCountProfile(130, 65)
-  const bottomLeft = getGridCountProfile(0, 130)
-  const bottomCenter = getGridCountProfile(65, 130)
-  const bottomRight = getGridCountProfile(130, 130)
-
-  const edgeToEdge = data.length
-  const centerToEdge = Math.floor(data.length / 2)
-
-  console.log('topLeft', Object.keys(topLeft).length)
-  console.log('topCenter', Object.keys(topCenter).length)
-  // console.log('topRight', Object.keys(topRight).length)
-  // console.log('middleLeft', Object.keys(middleLeft).length)
-  // console.log('middleCenter', Object.keys(middleCenter).length)
-  // console.log('middleRight', Object.keys(middleRight).length)
-  // console.log('bottomLeft', Object.keys(bottomLeft).length)
-  // console.log('bottomCenter', Object.keys(bottomCenter).length)
-  // console.log('bottomRight', Object.keys(bottomRight).length)
-  // console.log(topCenter)
-
-  console.log('centerToEdge', centerToEdge)
-  console.log('edgeToEdge', edgeToEdge)
-
-  const fullCoverageSquares = Math.floor((bigStepsCount - 65) / edgeToEdge) - 1
-
-  const reaminder = (bigStepsCount - 65) % edgeToEdge
-
-  console.log('fullCoverageSquares', fullCoverageSquares)
-  console.log('reaminder', reaminder)
-
-  console.log('xxxxx')
-
-  console.log(middleCenter)
-
-  return null
+  // const topLeft = getGridCountProfile(0, 0)
+  // const topCenter = getGridCountProfile(65, 0)
+  // const topRight = getGridCountProfile(130, 0)
+  // const middleLeft = getGridCountProfile(0, 65)
+  // const middleCenter = getGridCountProfile(65, 65)
+  // const middleRight = getGridCountProfile(130, 65)
+  // const bottomLeft = getGridCountProfile(0, 130)
+  // const bottomCenter = getGridCountProfile(65, 130)
+  // const bottomRight = getGridCountProfile(130, 130)
+  // const edgeToEdge = data.length
+  // const centerToEdge = Math.floor(data.length / 2)
+  // console.log('topLeft', Object.keys(topLeft).length)
+  // console.log('topCenter', Object.keys(topCenter).length)
+  // // console.log('topRight', Object.keys(topRight).length)
+  // // console.log('middleLeft', Object.keys(middleLeft).length)
+  // // console.log('middleCenter', Object.keys(middleCenter).length)
+  // // console.log('middleRight', Object.keys(middleRight).length)
+  // // console.log('bottomLeft', Object.keys(bottomLeft).length)
+  // // console.log('bottomCenter', Object.keys(bottomCenter).length)
+  // // console.log('bottomRight', Object.keys(bottomRight).length)
+  // // console.log(topCenter)
+  // console.log('centerToEdge', centerToEdge)
+  // console.log('edgeToEdge', edgeToEdge)
+  // const fullCoverageSquares = Math.floor((bigStepsCount - 65) / edgeToEdge) - 1
+  // const reaminder = (bigStepsCount - 65) % edgeToEdge
+  // console.log('fullCoverageSquares', fullCoverageSquares)
+  // console.log('reaminder', reaminder)
+  // console.log('xxxxx')
+  // console.log(middleCenter)
+  // return null
 }
