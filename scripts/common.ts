@@ -37,22 +37,14 @@ export const generateSolutionDirectoryPath = (fileData: FileData) => {
       mkdirSync(aocYearDirectoryPath)
     }
 
-    const aocDayDirectoryPath = `${aocYearDirectoryPath}/${_.padStart(
-      `${fileData.day}`,
-      2,
-      '0',
-    )}`
+    const aocDayDirectoryPath = `${aocYearDirectoryPath}/${_.padStart(`${fileData.day}`, 2, '0')}`
     if (!existsSync(aocDayDirectoryPath)) {
       mkdirSync(aocDayDirectoryPath)
     }
     fileData.modulePath = `${aocDayDirectoryPath}/index.ts`
   }
   if (fileData.project === 'euler') {
-    const eulerProblemDirectoryPath = `${projectDirectoryPath}/${_.padStart(
-      `${fileData.problem}`,
-      3,
-      '0',
-    )}`
+    const eulerProblemDirectoryPath = `${projectDirectoryPath}/${_.padStart(`${fileData.problem}`, 3, '0')}`
     if (!existsSync(eulerProblemDirectoryPath)) {
       mkdirSync(eulerProblemDirectoryPath)
     }
@@ -89,12 +81,10 @@ const askProjectType = async () => {
 
 const askAocDate = async () => {
   const earliestYear = 2015
-  const yearChoices = _.range(new Date().getFullYear(), earliestYear - 1).map(
-    year => ({
-      title: `${year}`,
-      value: `${year}`,
-    }),
-  )
+  const yearChoices = _.range(new Date().getFullYear(), earliestYear - 1).map(year => ({
+    title: `${year}`,
+    value: `${year}`,
+  }))
   const lastDay = 25
   const dayChoices = _.range(1, lastDay + 1).map(day => ({
     title: `${day}`,

@@ -7,6 +7,7 @@
     "change": "esno ./scripts/exec.ts -c",
     "create": "esno ./scripts/create.ts",
     "report": "esno ./scripts/report.ts",
+    "vis": "vite",
     "delete-solutions": "rm -rf ./solutions"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "inquirer": "^10.1.2",
     "lodash": "^4.17.21",
     "prompts": "^2.4.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^6.0.1"
   }
 }
