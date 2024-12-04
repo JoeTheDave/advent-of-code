@@ -21,3 +21,11 @@ export const factorial = (num: number) => {
   }
   return sum
 }
+
+export const gcd = (a: number, b: number): number => {
+  return !b ? a : gcd(b, a % b)
+}
+
+export const lcm = (a: number, b: number): number => {
+  return (a * b) / gcd(a, b)
+}

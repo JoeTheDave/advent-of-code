@@ -2,14 +2,13 @@
 // https://adventofcode.com/2023/day/8
 // https://adventofcode.com/2023/day/8/input
 
-import { testData, puzzleData } from './data'
+import { lcm } from '@/lib/mathUtils'
+import { testData1, testData2, puzzleData } from './data'
 
 export const displayName = 'AOC | 2023 | Day 8 | Haunted Wasteland'
-export const complete = [true, false]
+export const complete = [true, true]
 
 const useTestData = false
-
-const data = useTestData ? testData : puzzleData
 
 interface NetworkNode {
   id: string
@@ -17,7 +16,7 @@ interface NetworkNode {
   right: NetworkNode
 }
 
-const prepareDataStructures = () => {
+const prepareDataStructures = (data: string[]) => {
   const instructionLoop = data[0]
   const networkLines = data.slice(2, data.length)
   const network: NetworkNode[] = []
@@ -29,7 +28,7 @@ const prepareDataStructures = () => {
     })
   })
   networkLines.forEach(line => {
-    const [node, leftPath, rightPath] = line.match(/[A-Z]+/g)!.map(id => network.find(n => n.id === id))
+    const [node, leftPath, rightPath] = line.match(/[A-Z0-9]+/g)!.map(id => network.find(n => n.id === id))
     if (node) {
       node.left = leftPath as NetworkNode
       node.right = rightPath as NetworkNode
@@ -39,7 +38,8 @@ const prepareDataStructures = () => {
 }
 
 export const solutionOne = () => {
-  const { instructionLoop, network } = prepareDataStructures()
+  const data = useTestData ? testData1 : puzzleData
+  const { instructionLoop, network } = prepareDataStructures(data)
   let node = network.find(n => n.id === 'AAA') as NetworkNode
   let steps = 0
   do {
@@ -50,19 +50,17 @@ export const solutionOne = () => {
 }
 
 export const solutionTwo = () => {
-  // Note: This solution runs for an unknown amount of time to an unknoown answer
-  // const { instructionLoop, network } = prepareDataStructures()
-  // let nodes = network.filter(n => n.id[2] === 'A')
-  // let steps = 0
-  // do {
-  //   // console.log(nodes)
-  //   nodes = nodes.map(node => (instructionLoop[steps % instructionLoop.length] === 'L' ? node.left : node.right))
-  //   // console.log(nodes)
-  //   steps++
-  //   const zCount = nodes.filter(n => n.id[2] === 'Z').length
-  //   if (zCount > 3) {
-  //     console.log(zCount, steps)
-  //   }
-  // } while (nodes.filter(n => n.id[2] === 'Z').length !== nodes.length)
-  // return steps
+  const data = useTestData ? testData2 : puzzleData
+  const { instructionLoop, network } = prepareDataStructures(data)
+  return network
+    .filter(n => n.id[2] === 'A')
+    .map(node => {
+      let steps = 0
+      do {
+        node = instructionLoop[steps % instructionLoop.length] === 'L' ? node.left : node.right
+        steps++
+      } while (node.id[2] !== 'Z')
+      return steps
+    })
+    .reduce((multiple, val) => lcm(multiple, val), 1)
 }
