@@ -3,7 +3,6 @@
 // https://adventofcode.com/2015/day/8/input
 
 import fs from 'fs'
-import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2015 | Day 8 | Matchsticks '
 export const complete = [true, true]
