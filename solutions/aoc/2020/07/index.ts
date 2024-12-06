@@ -5,7 +5,7 @@
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2020 | Day 7 | Handy Haversacks'
-export const complete = [true, false]
+export const complete = [true, true]
 
 const useTestData = false
 
@@ -33,9 +33,11 @@ class Bag {
   }
 
   totalContentsCount = (): number => {
-    // if (this.contains.length) {
-    //   this.contains.
-    // }
+    if (this.contains.length) {
+      return this.contains.reduce((count, bagInfo) => {
+        return count + bagInfo.count + bagInfo.count * bagInfo.bag.totalContentsCount()
+      }, 0)
+    }
     return 0
   }
 }
