@@ -5,7 +5,7 @@
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2024 | Day 7 | Bridge Repair'
-export const complete = [true, false]
+export const complete = [true, true]
 
 const useTestData = false
 
