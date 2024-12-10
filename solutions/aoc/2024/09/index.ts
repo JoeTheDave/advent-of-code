@@ -2,7 +2,7 @@
 // https://adventofcode.com/2024/day/9
 // https://adventofcode.com/2024/day/9/input
 
-import { findIndex, findLastIndex, fill } from 'lodash'
+import { findIndex, findLastIndex } from 'lodash'
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2024 | Day 9 | Disk Fragmenter'
