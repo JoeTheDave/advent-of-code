@@ -2,12 +2,13 @@
 // https://adventofcode.com/2024/day/10
 // https://adventofcode.com/2024/day/10/input
 
+import { flatten, uniq } from 'lodash'
 import { testData, puzzleData } from './data'
 
 export const displayName = 'AOC | 2024 | Day 10 | Hoof It'
-export const complete = [false, false]
+export const complete = [true, true]
 
-const useTestData = true
+const useTestData = false
 
 const rawData = useTestData ? testData : puzzleData
 
@@ -37,6 +38,32 @@ class Map {
       }
     })
   }
+
+  determineRoutes = () => {
+    this.nodes.filter(n => n.value === 9).forEach(n => (n.routes = 1))
+    for (let i = 8; i >= 0; i--) {
+      this.nodes
+        .filter(n => n.value === i)
+        .forEach(n => {
+          n.routes = [n.n, n.e, n.s, n.w]
+            .filter(nn => nn?.value === n.value + 1)
+            .reduce((sum, nn) => sum + (nn?.routes || 0), 0)
+        })
+    }
+  }
+
+  scoreTrailHeads = () => {
+    this.nodes.filter(n => n.value === 9).forEach(n => n.canReachSummits.push(n.id))
+    for (let i = 8; i >= 0; i--) {
+      this.nodes
+        .filter(n => n.value === i)
+        .forEach(n => {
+          n.canReachSummits = uniq(
+            flatten([n.n, n.e, n.s, n.w].filter(nn => nn && nn.value === i + 1).map(nn => nn?.canReachSummits || [])),
+          )
+        })
+    }
+  }
 }
 
 class Node {
@@ -48,6 +75,8 @@ class Node {
   s: Node | null
   e: Node | null
   w: Node | null
+  canReachSummits: number[]
+  routes: number
 
   constructor(x: number, y: number, id: number, value: number) {
     this.x = x
@@ -58,26 +87,58 @@ class Node {
     this.s = null
     this.e = null
     this.w = null
-  }
-
-  traverse = (): number => {
-    if (this.value === 9) {
-      return 1
-    } else {
-      return [this.n, this.e, this.s, this.w]
-        .filter(n => n && n.value === this.value + 1)
-        .map(n => n?.traverse() || 0)
-        .reduce((sum, num) => sum + num, 0)
-    }
+    this.canReachSummits = []
+    this.routes = 0
   }
 }
 
 export const solutionOne = () => {
   const map = new Map(rawData)
-  const heads = map.nodes.filter(node => node.value === 0).map(n => n.traverse())
-  return heads
+  map.scoreTrailHeads()
+  return map.nodes
+    .filter(n => n.value === 0)
+    .map(n => n.canReachSummits.length)
+    .reduce((sum, num) => sum + num, 0)
 }
 
 export const solutionTwo = () => {
-  return null
+  const map = new Map(rawData)
+  map.determineRoutes()
+  return map.nodes
+    .filter(n => n.value === 0)
+    .map(n => n.routes)
+    .reduce((sum, num) => sum + num, 0)
+}
+
+export const visualize = () => {
+  const root = document.getElementById('root') as HTMLElement
+  const canvas = document.createElement('canvas')
+  canvas.width = 1000
+  canvas.height = 1000
+  root.appendChild(canvas)
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+
+  const rectSize = 100
+
+  const map = new Map(rawData)
+  map.scoreTrailHeads()
+  map.nodes.forEach(node => {
+    if (node.value === 9) {
+      ctx.fillStyle = 'pink'
+      ctx.fillRect(node.x * rectSize + 10, node.y * rectSize + 10, rectSize, rectSize)
+    }
+    if (node.value === 0) {
+      ctx.fillStyle = 'lime'
+      ctx.fillRect(node.x * rectSize + 10, node.y * rectSize + 10, rectSize, rectSize)
+    }
+    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 1
+    ctx.strokeRect(node.x * rectSize + 10, node.y * rectSize + 10, rectSize, rectSize)
+    ctx.font = '20px Arial'
+    ctx.fillStyle = 'black'
+    ctx.fillText(`${node.value}`, node.x * rectSize + 20, node.y * rectSize + 30)
+    ctx.font = '14px Arial'
+    ctx.fillStyle = 'red'
+    ctx.fillText(`${node.canReachSummits.length}`, node.x * rectSize + 20, node.y * rectSize + 50)
+  })
 }
