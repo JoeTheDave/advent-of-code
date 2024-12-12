@@ -7,7 +7,7 @@ import { testData, puzzleData } from './data'
 export const displayName = 'AOC | 2024 | Day 12 | Garden Groups'
 export const complete = [true, false]
 
-const useTestData = false
+const useTestData = true
 
 const rawData = useTestData ? testData : puzzleData
 
@@ -83,11 +83,9 @@ class Map {
         [n.n, n.ne, n.e, n.se, n.s, n.sw, n.w, n.nw].some(nn => nn === null || nn.groupId !== n.groupId),
       )
 
-      const groupPerimeterCornerNodes = groupPerimeterNodes.filter((n => ))
+      // const groupPerimeterCornerNodes = groupPerimeterNodes.filter((n => ))
 
-
-
-      sum += area * groupPerimeterCornerNodes
+      // sum += area * groupPerimeterCornerNodes
     }
     return sum
   }
@@ -145,4 +143,33 @@ export const solutionOne = () => {
 export const solutionTwo = () => {
   const map = new Map(rawData)
   return map.getDiscountCost()
+}
+
+export const visualize = () => {
+  const root = document.getElementById('root') as HTMLElement
+  const canvas = document.createElement('canvas')
+  canvas.width = 2000
+  canvas.height = 2000
+  root.appendChild(canvas)
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+
+  const map = new Map(rawData)
+  const groupId = 1
+  const rectSize = 10
+  const groupNodes = map.nodes.filter(n => n.groupId === groupId)
+  const groupPerimeterNodes = groupNodes.filter(n =>
+    [n.n, n.ne, n.e, n.se, n.s, n.sw, n.w, n.nw].some(nn => nn === null || nn.groupId !== n.groupId),
+  )
+  map.nodes.forEach(node => {
+    if (groupPerimeterNodes.includes(node)) {
+      ctx.fillStyle = 'lime'
+      ctx.fillRect(node.x * rectSize + 10, node.y * rectSize + 10, rectSize, rectSize)
+    }
+    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 1
+    ctx.strokeRect(node.x * rectSize + 10, node.y * rectSize + 10, rectSize, rectSize)
+    ctx.font = '8px Arial'
+    ctx.fillStyle = 'black'
+    ctx.fillText(`${node.value}`, node.x * rectSize + 12, node.y * rectSize + 18)
+  })
 }
