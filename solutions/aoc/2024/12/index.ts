@@ -1,0 +1,93 @@
+// Advent of Code | 2024 | Day 12 | Garden Groups
+// https://adventofcode.com/2024/day/12
+// https://adventofcode.com/2024/day/12/input
+
+import { testData, puzzleData } from './data'
+
+export const displayName = 'AOC | 2024 | Day 12 | Garden Groups'
+export const complete = [false, false]
+
+const useTestData = true
+
+const rawData = useTestData ? testData : puzzleData
+
+class Map {
+  nodes: Node[]
+  nextGroupId: number
+
+  constructor(data: string[]) {
+    this.nodes = []
+    this.nextGroupId = 0
+    for (let y = 0; y < data.length; y++) {
+      for (let x = 0; x < data[y].length; x++) {
+        const id = data[y].length * y + x
+        this.nodes.push(new Node(data[y][x], x, y, id))
+      }
+    }
+    this.nodes.forEach(node => {
+      if (node.y > 0) {
+        node.n = this.nodes.find(n => n.y === node.y - 1 && n.x === node.x) as Node
+      }
+      if (node.y < data.length - 1) {
+        node.s = this.nodes.find(n => n.y === node.y + 1 && n.x === node.x) as Node
+      }
+      if (node.x > 0) {
+        node.w = this.nodes.find(n => n.y === node.y && n.x === node.x - 1) as Node
+      }
+      if (node.x < data[0].length - 1) {
+        node.e = this.nodes.find(n => n.y === node.y && n.x === node.x + 1) as Node
+      }
+    })
+    while (this.nodes.some(node => !node.groupId)) {
+      const groupStartNode = this.nodes.find(node => !node.groupId) as Node
+      groupStartNode.groupId = this.nextGroupId
+      this.nextGroupId++
+      groupStartNode.propigateGroupId()
+    }
+  }
+}
+
+class Node {
+  value: string
+  x: number
+  y: number
+  id: number
+  groupId: number | null
+  n: Node | null
+  s: Node | null
+  e: Node | null
+  w: Node | null
+
+  constructor(value: string, x: number, y: number, id: number) {
+    this.value = value
+    this.x = x
+    this.y = y
+    this.id = id
+    this.groupId = null
+    this.n = null
+    this.s = null
+    this.e = null
+    this.w = null
+  }
+
+  propigateGroupId = () => {
+    if (this.groupId !== null) {
+      const neighbors = [this.n, this.s, this.e, this.w].filter(n => !!n)
+      neighbors.forEach(node => {
+        if (node && !node.groupId && node.value === this.value) {
+          node.value = this.value
+          node.propigateGroupId()
+        }
+      })
+    }
+  }
+}
+
+export const solutionOne = () => {
+  const map = new Map(rawData)
+  return map
+}
+
+export const solutionTwo = () => {
+  return null
+}
