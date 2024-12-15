@@ -7,7 +7,7 @@ import { testData, puzzleData } from './data'
 export const displayName = 'AOC | 2024 | Day 12 | Garden Groups'
 export const complete = [true, false]
 
-const useTestData = false
+const useTestData = true
 
 const rawData = useTestData ? testData : puzzleData
 
@@ -83,6 +83,8 @@ class Map {
         [n.n, n.ne, n.e, n.se, n.s, n.sw, n.w, n.nw].some(nn => nn === null || nn.groupId !== n.groupId),
       )
 
+      const perimeterWalk: Node[] = [groupPerimeterNodes[0]]
+
       // const groupPerimeterCornerNodes = groupPerimeterNodes.filter((n => ))
 
       // sum += area * groupPerimeterCornerNodes
@@ -135,13 +137,16 @@ class Node {
   }
 }
 
+const wrapGrid = (rawData: string[]) =>
+  [Array(rawData.length + 2).fill('.'), ...rawData.map(d => `.${d}.`), Array(rawData.length + 2).fill('.')] as string[]
+
 export const solutionOne = () => {
   const map = new Map(rawData)
   return map.getCost()
 }
 
 export const solutionTwo = () => {
-  const map = new Map(rawData)
+  const map = new Map(wrapGrid(rawData))
   return map.getDiscountCost()
 }
 
@@ -153,9 +158,10 @@ export const visualize = () => {
   root.appendChild(canvas)
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-  const map = new Map(rawData)
-  const groupId = 1
-  const rectSize = 10
+  const map = new Map(wrapGrid(rawData))
+  const groupId = 4
+  const rectSize = 50
+  const textSize = Math.min(Math.floor(rectSize * 0.8), 24)
   const groupNodes = map.nodes.filter(n => n.groupId === groupId)
   const groupPerimeterNodes = groupNodes.filter(n =>
     [n.n, n.ne, n.e, n.se, n.s, n.sw, n.w, n.nw].some(nn => nn === null || nn.groupId !== n.groupId),
@@ -168,8 +174,12 @@ export const visualize = () => {
     ctx.strokeStyle = 'black'
     ctx.lineWidth = 1
     ctx.strokeRect(node.x * rectSize + 10, node.y * rectSize + 10, rectSize, rectSize)
-    ctx.font = '8px Arial'
+    ctx.font = `${textSize}px Arial`
     ctx.fillStyle = 'black'
-    ctx.fillText(`${node.value}`, node.x * rectSize + 12, node.y * rectSize + 18)
+    ctx.fillText(
+      `${node.value}`,
+      node.x * rectSize + Math.floor(textSize * 1.5),
+      node.y * rectSize + Math.floor(textSize * 2.25),
+    )
   })
 }

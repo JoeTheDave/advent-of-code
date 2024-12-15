@@ -38,8 +38,8 @@ const compileMachineData = (data: string[]) => {
 }
 
 export const solutionOne = () => {
-  const machines: MachineInfo[] = compileMachineData(rawData)
-  return machines
+  // const machines: MachineInfo[] = compileMachineData(rawData)
+  // return machines
 }
 
 export const solutionTwo = () => {
