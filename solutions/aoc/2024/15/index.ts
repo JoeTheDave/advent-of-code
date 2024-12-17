@@ -155,16 +155,5 @@ export const visualize = () => {
   // root.appendChild(button)
 
   // button.onclick = () => {
-  //   for (let i = 1; i <= 101; i++) {
-  //     iterateRobots()
-  //   }
-  //   displayRobots()
   // }
-
-  // setInterval(() => {
-  //   for (let i = 1; i <= 101; i++) {
-  //     iterateRobots()
-  //   }
-  //   displayRobots()
-  // }, 500)
 }
